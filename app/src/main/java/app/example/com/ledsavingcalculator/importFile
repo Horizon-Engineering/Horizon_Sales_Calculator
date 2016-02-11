@@ -1,0 +1,15 @@
+{
+  "your-json-data" : {
+    "strings" : "Hello, World!",
+    "numbers" : 42,
+    "booleans" : true,
+    "arrays" : ["red", "white", "blue"],
+    "objects" : {
+      "name" : "Mike",
+      "age" : 22,
+      "isFirebaseEmployee" : true,
+      "favorites" : ["swimming", "cycling", "running"]
+    },
+    "null" : null
+  }
+}

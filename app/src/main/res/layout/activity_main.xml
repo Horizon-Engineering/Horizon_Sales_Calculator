@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Current Wattage Of Bulbs:"
+        android:id="@+id/textView"
+        android:layout_marginTop="62dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/editText"
+        android:layout_below="@+id/spinner2"
+        android:layout_alignStart="@+id/spinner2"
+        android:layout_alignEnd="@+id/spinner2"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/bulbTypeLable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Current Types Of Bulbs:"
+        android:layout_marginTop="72dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_below="@+id/textView" />
+
+    <TextView
+        android:id="@+id/currentCostType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Current Cost Of Bulb:"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_below="@+id/spinner2" />
+
+    <TextView
+        android:id="@+id/timeIntervalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Current Cost Of Bulb:"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/regionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Select Region:"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/timeIntervalLabel"
+        />
+
+    <TextView
+        android:id="@+id/noOfBulbLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="# of bulbs currently in use:"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/spinner4"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:id="@+id/noOfBulbs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner4"
+        android:layout_alignStart="@+id/spinner2"
+        android:layout_alignEnd="@+id/spinner2"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="visible"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/labourCostLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Labour Cost To Change One Bulb:"
+        android:layout_below="@+id/noOfBulbs"
+        android:layout_marginTop="35dp" />
+
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        android:focusable="true"
+        android:dropDownWidth="wrap_content"
+        android:focusableInTouchMode="true"
+        android:scrollIndicators="right"
+        android:transitionGroup="true"
+        android:layout_marginLeft="1100dp"
+        android:layout_alignTop="@+id/textView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        android:focusable="true"
+        android:dropDownWidth="wrap_content"
+        android:focusableInTouchMode="true"
+        android:scrollIndicators="right"
+        android:transitionGroup="true"
+        android:layout_marginLeft="1100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignEnd="@+id/bulbTypeLable"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/spinner1" />
+
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        android:focusable="true"
+        android:dropDownWidth="wrap_content"
+        android:focusableInTouchMode="true"
+        android:scrollIndicators="right"
+        android:transitionGroup="true"
+        android:layout_marginLeft="1100dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
+
+    <Spinner
+        android:id="@+id/spinner4"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        android:focusable="true"
+        android:dropDownWidth="wrap_content"
+        android:focusableInTouchMode="true"
+        android:scrollIndicators="right"
+        android:transitionGroup="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@+id/regionLabel"
+        android:layout_alignStart="@+id/spinner3" />
+
+
+    <EditText
+        android:id="@+id/cost"
+        android:layout_width="fill_parent"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/noOfBulbs"
+        android:layout_alignStart="@+id/noOfBulbs"
+        android:layout_marginTop="25dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:text="$"
+        android:layout_alignTop="@+id/editText"
+        android:layout_toStartOf="@+id/editText"
+        android:layout_marginEnd="64dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dollarSign"
+        android:text="$"
+        android:layout_alignTop="@+id/cost"
+        android:layout_alignStart="@+id/editText2"
+        android:layout_alignEnd="@+id/editText2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/button3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/noOfBulbs" />
+</RelativeLayout>
