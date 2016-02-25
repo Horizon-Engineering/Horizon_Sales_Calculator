@@ -1,204 +1,358 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Current Wattage Of Bulbs:"
-        android:id="@+id/textView"
-        android:layout_marginTop="62dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        />
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="false"
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/editText"
-        android:layout_below="@+id/spinner2"
-        android:layout_alignStart="@+id/spinner2"
-        android:layout_alignEnd="@+id/spinner2"
-        android:visibility="visible" />
+    android:background="#091929">
 
-    <TextView
-        android:id="@+id/bulbTypeLable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Current Types Of Bulbs:"
-        android:layout_marginTop="72dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/textView"
-        android:layout_below="@+id/textView" />
-
-    <TextView
-        android:id="@+id/currentCostType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Current Cost Of Bulb:"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="25dp"
-        android:layout_alignEnd="@+id/textView"
-        android:layout_below="@+id/spinner2" />
-
-    <TextView
-        android:id="@+id/timeIntervalLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Current Cost Of Bulb:"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/regionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Select Region:"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="35dp"
-        android:layout_below="@+id/timeIntervalLabel"
-        />
-
-    <TextView
-        android:id="@+id/noOfBulbLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="# of bulbs currently in use:"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/spinner4"
-        android:layout_marginTop="15dp" />
-
-    <EditText
-        android:id="@+id/noOfBulbs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner4"
-        android:layout_alignStart="@+id/spinner2"
-        android:layout_alignEnd="@+id/spinner2"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="visible"
-        android:layout_marginTop="15dp" />
-
-    <TextView
-        android:id="@+id/labourCostLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Labour Cost To Change One Bulb:"
-        android:layout_below="@+id/noOfBulbs"
-        android:layout_marginTop="35dp" />
-
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        android:focusable="true"
-        android:dropDownWidth="wrap_content"
-        android:focusableInTouchMode="true"
-        android:scrollIndicators="right"
-        android:transitionGroup="true"
-        android:layout_marginLeft="1100dp"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        android:focusable="true"
-        android:dropDownWidth="wrap_content"
-        android:focusableInTouchMode="true"
-        android:scrollIndicators="right"
-        android:transitionGroup="true"
-        android:layout_marginLeft="1100dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignEnd="@+id/bulbTypeLable"
-        android:layout_marginRight="10dp"
-        android:layout_below="@+id/spinner1" />
-
-    <Spinner
-        android:id="@+id/spinner3"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        android:focusable="true"
-        android:dropDownWidth="wrap_content"
-        android:focusableInTouchMode="true"
-        android:scrollIndicators="right"
-        android:transitionGroup="true"
-        android:layout_marginLeft="1100dp"
-        android:layout_marginRight="10dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true" />
-
-    <Spinner
-        android:id="@+id/spinner4"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        android:focusable="true"
-        android:dropDownWidth="wrap_content"
-        android:focusableInTouchMode="true"
-        android:scrollIndicators="right"
-        android:transitionGroup="true"
-        android:layout_marginRight="10dp"
-        android:layout_alignTop="@+id/regionLabel"
-        android:layout_alignStart="@+id/spinner3" />
-
-
-    <EditText
-        android:id="@+id/cost"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/noOfBulbs"
-        android:layout_alignStart="@+id/noOfBulbs"
-        android:layout_marginTop="25dp" />
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        android:paddingTop="0dp"
+        >
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:text="$"
-        android:layout_alignTop="@+id/editText"
-        android:layout_toStartOf="@+id/editText"
-        android:layout_marginEnd="64dp" />
+       <FrameLayout
+            android:layout_width="280dp"
+            android:layout_height="70dp"
+            android:id="@+id/frameLayout">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dollarSign"
-        android:text="$"
-        android:layout_alignTop="@+id/cost"
-        android:layout_alignStart="@+id/editText2"
-        android:layout_alignEnd="@+id/editText2" />
+            <ImageView
+                android:layout_width="186dp"
+                android:layout_height="66dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/horizon_white"
+                android:layout_marginLeft="10dp" />
+        </FrameLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/button3"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/noOfBulbs" />
-</RelativeLayout>
+
+        <TextView
+            android:id="@+id/selectTypeLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="155dp"
+            android:text="Select Type Of Light"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/textView6"
+            android:layout_alignEnd="@+id/numberOfFixturesLable"
+            android:fontFamily="@android:string/paste"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/numberOfFixturesLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number Of Fixtures"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_below="@+id/selectTypeLable"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="79dp"
+            android:layout_alignEnd="@+id/costOfExistingBulbLable"
+            android:layout_above="@+id/numberOfBulbPerFixtureLable"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/numberOfBulbPerFixtureLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number of Bulbs Per Fixture"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_below="@+id/numberOfFixture"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/numberOfFixturesLable"
+            android:layout_marginTop="30dp"
+            android:textColor="#ffffff" />
+
+        <EditText
+            android:id="@+id/noOfBulbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:layout_alignEnd="@+id/radioGroup"
+            android:layout_alignStart="@+id/radioGroup"
+            android:layout_below="@+id/radioGroup" />
+
+
+        <Spinner
+            android:id="@+id/existingBulbType"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:dropDownWidth="wrap_content"
+            android:scrollIndicators="right"
+            android:transitionGroup="true"
+            android:layout_alignTop="@+id/selectTypeLable"
+            android:layout_alignParentEnd="true"
+            android:spinnerMode="dropdown"
+            android:background="#FFFFFF"
+            android:clickable="true" />
+
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Existing Lighting"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFFFF"
+            android:layout_below="@+id/frameLayout"
+            android:layout_toStartOf="@+id/nextBtn"
+            android:layout_marginTop="35dp" />
+
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:layout_alignStart="@+id/existingBulbType"
+            android:layout_below="@+id/numberOfBulbPerFixtureLable">
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/costOfExistingBulbLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Approximate Cost Of Bulb:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignBaseline="@+id/costOfExistingBulb"
+            android:layout_alignBottom="@+id/costOfExistingBulb"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/selectLifeSpanType"
+            android:textColor="#ffffff" />
+
+        <EditText
+            android:id="@+id/existingBulbLifeSpan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:layout_alignEnd="@+id/noOfBulbs"
+            android:layout_alignStart="@+id/noOfBulbs"
+            android:layout_alignTop="@+id/noOfBulbs" />
+
+        <EditText
+            android:id="@+id/replacementLEDWatt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:layout_alignStart="@+id/existingBulbLifeSpan"
+            android:layout_alignEnd="@+id/existingBulbLifeSpan" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Hours"
+            android:id="@+id/hourUnit"
+            android:singleLine="true"
+            android:layout_below="@+id/lifespanHour"
+            android:layout_alignEnd="@+id/lifespanHour"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignStart="@+id/costOfExistingBulb"
+            android:layout_below="@+id/costOfExistingBulb"
+            android:layout_toStartOf="@+id/costOfExistingBulb" />
+
+        <EditText
+            android:id="@+id/numberOfFixture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:layout_below="@+id/existingBulbType"
+            android:layout_alignStart="@+id/existingBulbType"
+            android:layout_alignEnd="@+id/existingBulbType"
+            android:layout_marginTop="40dp"
+            android:inputType="number|numberSigned"
+            android:textColor="#ffffff" />
+
+        <EditText
+            android:id="@+id/numberOfBulbPerFixture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:layout_alignEnd="@+id/numberOfFixture"
+            android:layout_alignStart="@+id/numberOfFixture"
+            android:layout_alignBottom="@+id/numberOfBulbPerFixtureLable"
+            android:inputType="numberSigned"
+            android:textColor="#ffffff"
+            android:layout_alignTop="@+id/numberOfBulbPerFixtureLable" />
+
+        <EditText
+            android:id="@+id/lifespanHour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:layout_alignStart="@+id/noOfBulbs"
+            android:layout_alignEnd="@+id/numberOfBulbPerFixture"
+            android:layout_above="@+id/editText"
+            android:inputType="numberSigned"
+            android:textColor="#FFFFFFFF" />
+
+        <Spinner
+            android:id="@+id/selectLifeSpanType"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:background="#FFFFFFFF"
+            android:dropDownWidth="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollIndicators="right"
+            android:spinnerMode="dropdown"
+            android:transitionGroup="true"
+            android:layout_alignTop="@+id/existingBulbLifeSpan"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/costOfExistingBulb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:layout_alignWithParentIfMissing="false"
+            android:singleLine="true"
+            android:layout_below="@+id/hourUnit"
+            android:layout_alignStart="@+id/numberOfBulbPerFixture"
+            android:layout_marginTop="68dp"
+            android:layout_alignEnd="@+id/ExistingBulbWattage"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:layout_alignStart="@+id/noOfBulbs"
+            android:layout_alignEnd="@+id/lifespanHour"
+            android:layout_alignBottom="@+id/noOfBulbs"
+            android:layout_below="@+id/existingBulbLifeSpan" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Watts"
+            android:id="@+id/textView3"
+            android:singleLine="true"
+            android:layout_below="@+id/ExistingBulbWattage"
+            android:layout_alignStart="@+id/hourUnit"
+            android:textColor="#ffffff" />
+
+        <EditText
+            android:id="@+id/ExistingBulbWattage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:layout_alignWithParentIfMissing="false"
+            android:singleLine="true"
+            android:layout_below="@+id/hourUnit"
+            android:layout_alignEnd="@+id/hourUnit"
+            android:layout_toEndOf="@+id/existingBulbLifeSpan"
+            android:inputType="numberSigned"
+            android:textColor="#FFFFFFFF" />
+
+        <TextView
+            android:id="@+id/ExistingBulbWattageLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wattage Of Existing Bulb"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignEnd="@+id/selectLifeSpanType"
+            android:layout_above="@+id/textView3"
+            android:layout_alignTop="@+id/ExistingBulbWattage"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/nextBtn"
+            android:layout_below="@+id/costOfExistingBulb"
+            android:layout_alignEnd="@+id/textView3"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/toggle_full_background"
+            />
+
+        <EditText
+            android:id="@+id/enteredTypeOfBulb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="invisible"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/replacementLEDWatt"
+            android:layout_alignBottom="@+id/enterTypeOfBulbLable"
+            android:layout_alignTop="@+id/enterTypeOfBulbLable"
+            android:nestedScrollingEnabled="false" />
+
+        <TextView
+            android:id="@+id/enterTypeOfBulbLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please Enter the Type Of Bulb"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/numberOfFixturesLable"
+            android:layout_below="@+id/existingBulbType"
+            android:visibility="invisible"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Months"
+            android:id="@+id/monthUnit"
+            android:singleLine="true"
+            android:layout_alignTop="@+id/hourUnit"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:text="Select LifeSpan"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignEnd="@+id/numberOfBulbPerFixtureLable"
+            android:layout_above="@+id/selectLifeSpanType"
+            android:layout_alignParentStart="true"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
+
+</ScrollView>

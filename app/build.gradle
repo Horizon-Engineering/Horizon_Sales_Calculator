@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "app.example.com.ledsavingcalculator"
-        minSdkVersion 21
+        minSdkVersion 18
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -17,18 +17,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    packagingOptions{
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE-FIREBASE.txt'
-        exclude 'META-INF/NOTICE'
-    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.firebase:firebase-client-android:2.2.3+'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'com.j256.ormlite:ormlite-jdbc:4.48'
+    compile 'com.h2database:h2:1.4.191'
+
+
 }
