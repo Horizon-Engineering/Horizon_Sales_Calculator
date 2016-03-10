@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1"
+    android:fillViewport="false"
+    android:background="#091929"
+    android:paddingLeft="30dp"
+    android:paddingRight="0dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Assign time to the selected day"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/textView16"
+        android:textColor="#FFFFFFFF"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Time"
+        android:layout_weight="0.04"
+        android:layout_marginTop="45dp"
+        android:id="@+id/textView15"
+        android:layout_below="@+id/textView16"
+        android:layout_alignParentStart="true"
+        android:textColor="#FFFFFFFF" />
+
+    <!--<Spinner
+        android:id="@+id/endTime"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.08"
+        android:background="#FFFFFFFF"
+        android:layout_alignTop="@+id/textView17"
+        android:layout_toEndOf="@+id/textView17"
+        android:layout_marginStart="47dp">
+    </Spinner>
+-->
+    <TextView
+        android:layout_width="123dp"
+        android:layout_height="wrap_content"
+        android:text="End Time"
+        android:layout_weight="0.12"
+        android:textColor="#FFFFFFFF"
+        android:id="@+id/textView17"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:background="@drawable/toggle_full_background"
+        android:layout_marginLeft="40dp"
+        android:layout_marginEnd="38dp"
+        android:layout_alignTop="@+id/endTimeBtn"
+        android:layout_alignParentEnd="true" />
+        <!--android:layout_alignTop="@+id/startTime"-->
+        android:layout_toEndOf="@+id/linearLayout"
+        android:layout_marginStart="63dp" />
+
+    <!--<Spinner-->
+        <!--android:id="@+id/startTime"-->
+        <!--android:layout_width="129dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="right"-->
+        <!--android:background="#FFFFFFFF"-->
+        <!--android:layout_alignTop="@+id/textView15"-->
+        <!--android:layout_toEndOf="@+id/textView17">-->
+    <!--</Spinner>-->
+
+    <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Start Time"
+    android:onClick="showTimePickerDialog"
+        android:id="@+id/startTimeBtn"
+        android:layout_toEndOf="@+id/textView17"
+        android:layout_alignTop="@+id/textView15" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Repeat"
+        android:id="@+id/repeat"
+        android:checked="false"
+        android:textColor="#FFFFFFFF"
+        android:layout_alignEnd="@+id/textView17"
+        android:layout_below="@+id/endTimeBtn"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="44dp">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S"
+            android:id="@+id/sunday"
+            android:checked="false"
+            android:textColor="#FFFFFFFF" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="M"
+            android:id="@+id/monday"
+            android:checked="false"
+            android:textColor="#FFFFFFFF"
+          />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="T"
+            android:id="@+id/tuesday"
+            android:checked="false"
+            android:textColor="#FFFFFFFF"
+             />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="W"
+            android:id="@+id/wednesday"
+            android:checked="false"
+            android:textColor="#FFFFFFFF"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="T"
+            android:id="@+id/thursday"
+            android:checked="false"
+            android:textColor="#FFFFFFFF"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="F"
+            android:id="@+id/friday"
+            android:checked="false"
+            android:textColor="#FFFFFFFF"
+             />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S"
+            android:id="@+id/saturday"
+            android:checked="false"
+            android:textColor="#FFFFFFFF"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:background="@drawable/toggle_full_background"
+        android:layout_alignBottom="@+id/startTimeBtn"
+        android:layout_alignStart="@+id/submit" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EndTime"
+        android:onClick="showTimePickerDialog"
+        android:id="@+id/endTimeBtn"
+        android:layout_alignTop="@+id/textView17"
+        android:layout_alignEnd="@+id/startTimeBtn"
+        android:layout_alignStart="@+id/startTimeBtn" />
+
+    <TextView
+        android:id="@+id/endTimeOutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignTop="@+id/endTimeBtn"
+        android:layout_toEndOf="@+id/linearLayout"
+        android:textColor="#FFFFFFFF" />
+
+    <TextView
+        android:id="@+id/startTimeOutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignTop="@+id/startTimeBtn"
+        android:layout_toEndOf="@+id/linearLayout"
+        android:singleLine="false"
+        android:textColor="#FFFFFFFF" />
+
+</RelativeLayout>

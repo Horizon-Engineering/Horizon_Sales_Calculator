@@ -4,15 +4,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="false"
-
-    android:background="#091929">
-
-
+    android:background="#091929" >
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="500dp"
+        android:layout_height="600dp"
         android:orientation="vertical"
+        android:paddingRight="5dp"
+        android:layout_marginLeft="5dp"
         android:paddingTop="0dp"
         >
 
@@ -33,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
+            android:text="Replacement Light"
             android:id="@+id/textView2"
             android:layout_below="@+id/frameLayout"
             android:layout_centerHorizontal="true"
@@ -49,25 +48,212 @@
             android:fontFamily="@android:string/paste"
             android:textColor="#ffffff"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView2" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New RadioButton"
-            android:id="@+id/radioButton"
+            android:layout_alignBottom="@+id/radioGroupId"
+            android:checked="true"
+            android:buttonTint="@color/white"
             android:layout_below="@+id/textView2"
-            android:layout_alignParentEnd="true" />
+            android:layout_marginTop="40dp" />
+
+
+
+        <RadioGroup
+            android:id="@+id/radioGroupId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/frameLayout"
+            android:layout_alignStart="@+id/replacmentType"
+            android:weightSum="1"
+            android:layout_below="@+id/textView2">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fixture"
+                android:id="@+id/fixture"
+                android:checked="false"
+                android:textColor="@color/white"
+                android:layout_marginTop="30dp"
+                android:layout_weight="2.85" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New RadioButton"
-            android:id="@+id/radioButton2"
-            android:layout_below="@+id/radioButton"
+            android:text="Bulb"
+            android:id="@+id/bulb1"
+            android:layout_below="@+id/fixture"
+            android:layout_alignParentEnd="true"
+            android:checked="false"
+            android:textColor="@color/white"
+            android:layout_alignStart="@+id/fixture"
+            android:layout_marginTop="5dp" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:text="Repalcement Light"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:fontFamily="@android:string/paste"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/radioGroupId"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:layout_alignEnd="@+id/textView5" />
+
+
+        <EditText
+            android:id="@+id/replacmentType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:textColor="#FFFFFFFF"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/textView4"
+            android:layout_marginLeft="40dp"
+            android:layout_alignTop="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:text="Wattage Of LED Replacement"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:fontFamily="@android:string/paste"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/replacmentType"
+            android:layout_alignEnd="@+id/textView4"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:id="@+id/wattageOfReplacementbulb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:inputType="number|numberSigned"
+            android:textColor="#ffffff"
+            android:layout_alignEnd="@+id/replacmentType"
+            android:layout_alignBottom="@+id/textView7"
+            android:layout_toEndOf="@+id/textView7"
+            android:layout_alignTop="@+id/textView7"
+            android:layout_alignStart="@+id/replacmentType" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Watts"
+            android:id="@+id/textView8"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/wattageOfReplacementbulb"
+            android:layout_alignEnd="@+id/wattageOfReplacementbulb"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:text="Life Span"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:fontFamily="@android:string/paste"
+            android:textColor="#ffffff"
+            android:layout_marginTop="45dp"
+            android:layout_below="@+id/textView7"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/textView2" />
+
+        <EditText
+            android:id="@+id/replacementLifeSpan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:inputType="number|numberSigned"
+            android:textColor="#ffffff"
+            android:layout_alignBottom="@+id/textView9"
+            android:layout_alignEnd="@+id/wattageOfReplacementbulb"
+            android:layout_marginTop="5dp"
+            android:layout_alignStart="@+id/wattageOfReplacementbulb" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Hours"
+            android:id="@+id/textView10"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/replacementLifeSpan"
+            android:layout_alignEnd="@+id/replacementLifeSpan"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:text="Cost Of Replacement Bulb"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:fontFamily="@android:string/paste"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/textView10"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="39dp"
+            android:layout_alignEnd="@+id/textView7" />
+
+        <EditText
+            android:id="@+id/costOfReplacement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:inputType="number|numberSigned"
+            android:textColor="#ffffff"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            android:layout_alignBottom="@+id/textView11"
+            android:layout_toEndOf="@+id/textView12"
+            android:numeric="decimal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/nextBtn"
+            android:background="@drawable/toggle_full_background"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/backBtn"
+            android:background="@drawable/toggle_full_background"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="CAD $"
+            android:id="@+id/textView12"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:paddingTop="20dp"
+            android:paddingRight="0dp"
+            android:layout_alignTop="@+id/costOfReplacement"
+            android:layout_alignStart="@+id/replacementLifeSpan" />
     </RelativeLayout>
 
 </ScrollView>

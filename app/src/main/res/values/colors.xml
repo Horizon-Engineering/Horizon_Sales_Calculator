@@ -5,4 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="backgroundcolor">#091929  </color>
     <color name="black">#080808 </color>
+    <color name="white">#FFFFFFFF </color>
+    <color name="shadowGreen">#99CBBA</color>
+    <color name="event_color_01">#59dbe0</color>
+    <color name="event_color_02">#f57f68</color>
+    <color name="event_color_03">#87d288</color>
+    <color name="event_color_04">#f8b552</color>
 </resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:id="@+id/graph" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:id="@+id/nextBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="35dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:id="@+id/backBtn"
+        android:layout_alignTop="@+id/nextBtn"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Electicity Cost PerMonth for Existing System "
+        android:id="@+id/textView19"
+        android:layout_alignBottom="@+id/textView20"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Electicity Cost PerMonth for Replacement System "
+        android:layout_alignEnd="@+id/textView19"
+        android:layout_below="@+id/graph"
+        android:layout_above="@+id/backBtn"
+        android:id="@+id/textView20" />
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/existingCost"
+        android:layout_above="@+id/textView19"
+        android:layout_toEndOf="@+id/textView20"
+        android:layout_marginStart="111dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/replacementCost"
+        android:layout_below="@+id/existingCost"
+        android:layout_alignEnd="@+id/existingCost" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="CAD $"
+        android:id="@+id/textView21"
+        android:layout_above="@+id/replacementCost"
+        android:layout_toEndOf="@+id/existingCost"
+        android:layout_marginStart="38dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="CAD $"
+        android:id="@+id/textView22"
+        android:layout_alignStart="@+id/textView21"
+        android:layout_alignEnd="@+id/textView21"
+        android:layout_alignTop="@+id/nextBtn"
+        android:layout_alignBottom="@+id/replacementCost" />
+
+</RelativeLayout>

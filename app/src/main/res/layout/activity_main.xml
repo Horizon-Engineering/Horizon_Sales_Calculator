@@ -4,15 +4,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="false"
-
     android:background="#091929">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/parent"
         android:layout_width="fill_parent"
         android:layout_height="500dp"
         android:orientation="vertical"
-        android:paddingTop="0dp"
-        >
+        android:paddingTop="0dp">
 
        <FrameLayout
             android:layout_width="280dp"
@@ -30,7 +29,7 @@
 
         <TextView
             android:id="@+id/selectTypeLable"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="155dp"
@@ -38,8 +37,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/textView6"
-            android:layout_alignEnd="@+id/numberOfFixturesLable"
+            android:layout_toStartOf="@+id/existingBulbType"
             android:fontFamily="@android:string/paste"
             android:textColor="#ffffff" />
 
@@ -52,9 +50,9 @@
             android:layout_below="@+id/selectTypeLable"
             android:layout_alignParentStart="true"
             android:layout_marginTop="79dp"
-            android:layout_alignEnd="@+id/costOfExistingBulbLable"
             android:layout_above="@+id/numberOfBulbPerFixtureLable"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:layout_toStartOf="@+id/numberOfFixture" />
 
         <TextView
             android:id="@+id/numberOfBulbPerFixtureLable"
@@ -64,9 +62,11 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_below="@+id/numberOfFixture"
             android:layout_alignParentStart="true"
-            android:layout_alignEnd="@+id/numberOfFixturesLable"
             android:layout_marginTop="30dp"
-            android:textColor="#ffffff" />
+            android:textColorHint="@color/white"
+            android:textColor="#ffffff"
+            android:fontFamily="@android:string/paste"
+            android:layout_alignEnd="@+id/numberOfFixturesLable" />
 
         <EditText
             android:id="@+id/noOfBulbs"
@@ -75,6 +75,7 @@
             android:numeric="integer"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:visibility="visible"
+            android:textColor="#ffffff"
             android:layout_alignEnd="@+id/radioGroup"
             android:layout_alignStart="@+id/radioGroup"
             android:layout_below="@+id/radioGroup" />
@@ -87,13 +88,13 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="10dp"
             android:dropDownWidth="wrap_content"
-            android:scrollIndicators="right"
-            android:transitionGroup="true"
             android:layout_alignTop="@+id/selectTypeLable"
             android:layout_alignParentEnd="true"
-            android:spinnerMode="dropdown"
-            android:background="#FFFFFF"
-            android:clickable="true" />
+            android:clickable="true"
+            android:textColor="#ffffff"
+            android:prompt="@string/ChooseBulbType"
+            android:spinnerMode="dialog"
+            android:background="#FFFFFFFF" />
 
 
         <TextView
@@ -102,9 +103,9 @@
             android:layout_height="wrap_content"
             android:text="Existing Lighting"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FFFFFFFF"
             android:layout_below="@+id/frameLayout"
             android:layout_toStartOf="@+id/nextBtn"
+            android:textColor="#ffffff"
             android:layout_marginTop="35dp" />
 
 
@@ -120,15 +121,15 @@
 
         <TextView
             android:id="@+id/costOfExistingBulbLable"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:text="Approximate Cost Of Bulb:"
+            android:text="Approximate Cost Of Bulb"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_alignBaseline="@+id/costOfExistingBulb"
             android:layout_alignBottom="@+id/costOfExistingBulb"
             android:layout_alignParentStart="true"
-            android:layout_alignEnd="@+id/selectLifeSpanType"
-            android:textColor="#ffffff" />
+            android:layout_alignTop="@+id/costOfExistingBulb"
+            android:textColor="#ffffff"
+            android:layout_alignEnd="@+id/ExistingBulbWattageLable" />
 
         <EditText
             android:id="@+id/existingBulbLifeSpan"
@@ -136,6 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:numeric="integer"
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:visibility="visible"
             android:layout_alignEnd="@+id/noOfBulbs"
@@ -147,6 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numeric="integer"
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:visibility="visible"
             android:layout_alignStart="@+id/existingBulbLifeSpan"
@@ -171,6 +174,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_alignStart="@+id/costOfExistingBulb"
             android:layout_below="@+id/costOfExistingBulb"
+            android:textColor="#ffffff"
             android:layout_toStartOf="@+id/costOfExistingBulb" />
 
         <EditText
@@ -178,6 +182,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numeric="integer"
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:visibility="visible"
             android:layout_below="@+id/existingBulbType"
@@ -185,20 +190,21 @@
             android:layout_alignEnd="@+id/existingBulbType"
             android:layout_marginTop="40dp"
             android:inputType="number|numberSigned"
-            android:textColor="#ffffff" />
+
+            />
 
         <EditText
             android:id="@+id/numberOfBulbPerFixture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numeric="integer"
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:visibility="visible"
             android:layout_alignEnd="@+id/numberOfFixture"
             android:layout_alignStart="@+id/numberOfFixture"
             android:layout_alignBottom="@+id/numberOfBulbPerFixtureLable"
             android:inputType="numberSigned"
-            android:textColor="#ffffff"
             android:layout_alignTop="@+id/numberOfBulbPerFixtureLable" />
 
         <EditText
@@ -208,11 +214,12 @@
             android:numeric="integer"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:visibility="visible"
+            android:textColor="#ffffff"
             android:layout_alignStart="@+id/noOfBulbs"
             android:layout_alignEnd="@+id/numberOfBulbPerFixture"
             android:layout_above="@+id/editText"
             android:inputType="numberSigned"
-            android:textColor="#FFFFFFFF" />
+            />
 
         <Spinner
             android:id="@+id/selectLifeSpanType"
@@ -228,22 +235,26 @@
             android:spinnerMode="dropdown"
             android:transitionGroup="true"
             android:layout_alignTop="@+id/existingBulbLifeSpan"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/textView6"
+            android:layout_marginTop="7dp"
+            android:layout_alignEnd="@+id/textView" />
 
         <EditText
             android:id="@+id/costOfExistingBulb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numeric="integer"
+            android:numeric="decimal"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:visibility="visible"
             android:layout_alignWithParentIfMissing="false"
             android:singleLine="true"
             android:layout_below="@+id/hourUnit"
-            android:layout_alignStart="@+id/numberOfBulbPerFixture"
             android:layout_marginTop="68dp"
+            android:textColor="#ffffff"
             android:layout_alignEnd="@+id/ExistingBulbWattage"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:layout_toEndOf="@+id/textView13" />
 
         <EditText
             android:id="@+id/editText"
@@ -255,6 +266,7 @@
             android:layout_alignStart="@+id/noOfBulbs"
             android:layout_alignEnd="@+id/lifespanHour"
             android:layout_alignBottom="@+id/noOfBulbs"
+            android:textColor="#ffffff"
             android:layout_below="@+id/existingBulbLifeSpan" />
 
         <TextView
@@ -277,22 +289,22 @@
             android:visibility="visible"
             android:layout_alignWithParentIfMissing="false"
             android:singleLine="true"
+            android:textColor="#ffffff"
             android:layout_below="@+id/hourUnit"
             android:layout_alignEnd="@+id/hourUnit"
             android:layout_toEndOf="@+id/existingBulbLifeSpan"
             android:inputType="numberSigned"
-            android:textColor="#FFFFFFFF" />
+            />
 
         <TextView
             android:id="@+id/ExistingBulbWattageLable"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:text="Wattage Of Existing Bulb"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_alignEnd="@+id/selectLifeSpanType"
-            android:layout_above="@+id/textView3"
-            android:layout_alignTop="@+id/ExistingBulbWattage"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:layout_alignBottom="@+id/textView3"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:layout_width="wrap_content"
@@ -313,6 +325,7 @@
             android:visibility="invisible"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/replacementLEDWatt"
+            android:textColor="#ffffff"
             android:layout_alignBottom="@+id/enterTypeOfBulbLable"
             android:layout_alignTop="@+id/enterTypeOfBulbLable"
             android:nestedScrollingEnabled="false" />
@@ -348,10 +361,23 @@
             android:layout_marginLeft="0dp"
             android:text="Select LifeSpan"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_alignEnd="@+id/numberOfBulbPerFixtureLable"
             android:layout_above="@+id/selectLifeSpanType"
             android:layout_alignParentStart="true"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:layout_alignTop="@+id/noOfBulbs"
+            android:layout_toStartOf="@+id/textView6"
+            android:layout_alignEnd="@+id/ExistingBulbWattageLable" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="CAD $"
+            android:id="@+id/textView13"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:layout_above="@+id/nextBtn"
+            android:layout_toEndOf="@+id/existingBulbLifeSpan" />
 
     </RelativeLayout>
 
