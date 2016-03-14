@@ -204,36 +204,43 @@ public class Calculations {
 
     public Double getTotalEnergySaving(int ledBulbLifespan, double existingBulbReplacementCost, PerDayData totalHours, Double monthlyEnergySaving) {
 
-       //Hours sundayToalHours = addThreeToObj(totalHours.sundayData.getOfLoad(), totalHours.sundayData.getPeakLoad(), totalHours.sundayData.getOnLoad());
-       // double sunday = getaDouble(ledBulbLifespan, existingBulbReplacementCost, sundayToalHours, monthlyEnergySaving);
+       Hours sundayToalHours = addThreeToObj(totalHours.sundayData.getOfLoad(), totalHours.sundayData.getPeakLoad(),
+               totalHours.sundayData.getOnLoad());
+      double sunday = getMonthlyCostForExisting(ledBulbLifespan, existingBulbReplacementCost, sundayToalHours.getNumberOfHours(),
+              sundayToalHours.getNumberOfMins(), monthlyEnergySaving);
 
-        long sundayToalHours = totalHours.sundayData.getOfLoad().getNumberOfHours() +
-                totalHours.sundayData.getOnLoad().getNumberOfHours()+ totalHours.sundayData.getPeakLoad().getNumberOfHours();
-        double sunday = getaDouble(ledBulbLifespan, existingBulbReplacementCost, sundayToalHours, monthlyEnergySaving);
+       // long sundayToalHours = totalHours.sundayData.getOfLoad().getNumberOfHours() +
+             //   totalHours.sundayData.getOnLoad().getNumberOfHours()+ totalHours.sundayData.getPeakLoad().getNumberOfHours();
+      //  long sundayTotalMin = addThreeToObj(totalHours.sundayData.getOfLoad().getNumberOfMins() ,
+             //   totalHours.sundayData.getOnLoad().getNumberOfMins(), totalHours.sundayData.getPeakLoad().getNumberOfMins();
 
-        long mondayToalHours = totalHours.mondayData.getOfLoad().getNumberOfHours() +
-                totalHours.mondayData.getOnLoad().getNumberOfHours()+ totalHours.mondayData.getPeakLoad().getNumberOfHours();
-        double monday = getaDouble(ledBulbLifespan, existingBulbReplacementCost, mondayToalHours, monthlyEnergySaving);
+        //double sunday = getMonthlyCostForExisting(ledBulbLifespan, existingBulbReplacementCost, sundayToalHours, monthlyEnergySaving);
 
-        long tuesdayToalHours = totalHours.tuesdayData.getOfLoad().getNumberOfHours() +
-                totalHours.tuesdayData.getOnLoad().getNumberOfHours()+ totalHours.tuesdayData.getPeakLoad().getNumberOfHours();
-        double tuesday = getaDouble(ledBulbLifespan, existingBulbReplacementCost, tuesdayToalHours, monthlyEnergySaving);
+        Hours mondayToalHours = addThreeToObj(totalHours.mondayData.getOfLoad(), totalHours.mondayData.getPeakLoad(),
+                totalHours.mondayData.getOnLoad());
+        double monday = getMonthlyCostForExisting(ledBulbLifespan, existingBulbReplacementCost, mondayToalHours.getNumberOfHours(),
+                mondayToalHours.getNumberOfMins(), monthlyEnergySaving);
 
-        long wednesdayToalHours = totalHours.wednesdayData.getOfLoad().getNumberOfHours() +
-                totalHours.wednesdayData.getOnLoad().getNumberOfHours()+ totalHours.wednesdayData.getPeakLoad().getNumberOfHours();
-        double wednesday = getaDouble(ledBulbLifespan, existingBulbReplacementCost, wednesdayToalHours, monthlyEnergySaving);
+        Hours tuesdayToalHours = addThreeToObj(totalHours.tuesdayData.getOfLoad(), totalHours.tuesdayData.getPeakLoad(),
+                totalHours.tuesdayData.getOnLoad());
+        double tuesday = getMonthlyCostForExisting(ledBulbLifespan, existingBulbReplacementCost, tuesdayToalHours.getNumberOfHours(), tuesdayToalHours.getNumberOfMins(), monthlyEnergySaving);
 
-        long thursdayToalHours = totalHours.thursdayData.getOfLoad().getNumberOfHours() +
-                totalHours.thursdayData.getOnLoad().getNumberOfHours()+ totalHours.thursdayData.getPeakLoad().getNumberOfHours();
-        double thursday = getaDouble(ledBulbLifespan, existingBulbReplacementCost, thursdayToalHours, monthlyEnergySaving);
+        Hours wednesdayToalHours = addThreeToObj(totalHours.wednesdayData.getOfLoad(), totalHours.wednesdayData.getPeakLoad(),
+                totalHours.wednesdayData.getOnLoad());
+        double wednesday = getMonthlyCostForExisting(ledBulbLifespan, existingBulbReplacementCost, wednesdayToalHours.getNumberOfHours(), wednesdayToalHours.getNumberOfMins(), monthlyEnergySaving);
 
-        long fridayToalHours = totalHours.fridayData.getOfLoad().getNumberOfHours() +
-                totalHours.fridayData.getOnLoad().getNumberOfHours()+ totalHours.fridayData.getPeakLoad().getNumberOfHours();
-        double friday = getaDouble(ledBulbLifespan, existingBulbReplacementCost, fridayToalHours, monthlyEnergySaving);
+        Hours thursdayToalHours = addThreeToObj(totalHours.thursdayData.getOfLoad(), totalHours.thursdayData.getPeakLoad(),
+                totalHours.thursdayData.getOnLoad());
+        double thursday = getMonthlyCostForExisting(ledBulbLifespan, existingBulbReplacementCost, thursdayToalHours.getNumberOfHours(),
+                thursdayToalHours.getNumberOfMins(), monthlyEnergySaving);
 
-        long saturdayToalHours = totalHours.saturdayData.getOfLoad().getNumberOfHours() +
-                totalHours.saturdayData.getOnLoad().getNumberOfHours()+ totalHours.saturdayData.getPeakLoad().getNumberOfHours();
-        double saturday = getaDouble(ledBulbLifespan, existingBulbReplacementCost, saturdayToalHours, monthlyEnergySaving);
+        Hours fridayToalHours = addThreeToObj(totalHours.fridayData.getOfLoad(), totalHours.fridayData.getPeakLoad(),
+                totalHours.fridayData.getOnLoad());
+        double friday = getMonthlyCostForExisting(ledBulbLifespan, existingBulbReplacementCost, fridayToalHours.getNumberOfHours(), fridayToalHours.getNumberOfMins(), monthlyEnergySaving);
+
+        Hours saturdayToalHours = addThreeToObj(totalHours.saturdayData.getOfLoad(), totalHours.saturdayData.getPeakLoad(),
+                totalHours.saturdayData.getOnLoad());
+        double saturday = getMonthlyCostForExisting(ledBulbLifespan, existingBulbReplacementCost, saturdayToalHours.getNumberOfHours(), saturdayToalHours.getNumberOfMins(), monthlyEnergySaving);
 
         return sunday+monday+wednesday+thursday+friday+saturday+tuesday;
     }
@@ -260,8 +267,9 @@ public class Calculations {
     }
 
     @NonNull
-    private Double getaDouble(int ledBulbLifespan, double existingBulbReplacementCost, long totalHours, Double monthlyEnergySaving) {
-        long lifeSpanIntoYears = ledBulbLifespan / (totalHours * 20 * 12);
+    private Double getMonthlyCostForExisting(int ledBulbLifespan, double existingBulbReplacementCost, float totalHours, float totalMin, Double monthlyEnergySaving) {
+        totalHours = (float) (totalHours + (totalMin/60.0));
+        float lifeSpanIntoYears = (float) (ledBulbLifespan / (totalHours  * 20.0 * 12.0));
         double costSavingPerYear = existingBulbReplacementCost / lifeSpanIntoYears;
         Double costSavingPerMonth = costSavingPerYear / 12;
         Double totalEnergySaving = costSavingPerMonth + monthlyEnergySaving;
@@ -442,11 +450,11 @@ public class Calculations {
     }
 
     public Double getMonthlyCostForExistingBulb(PerDayData totalHoursPerDay, ExistingBulb lastRow, double onloadCost, double peakloadCost, double offloadCost) {
-        return getaDouble(totalHoursPerDay, lastRow, onloadCost, peakloadCost, offloadCost);
+        return getMonthlyCostForExisting(totalHoursPerDay, lastRow, onloadCost, peakloadCost, offloadCost);
     }
 
     @NonNull
-    private Double getaDouble(PerDayData totalHoursPerDay, ExistingBulb lastRow, double onloadCost, double peakloadCost, double offloadCost) {
+    private Double getMonthlyCostForExisting(PerDayData totalHoursPerDay, ExistingBulb lastRow, double onloadCost, double peakloadCost, double offloadCost) {
        //double CostOfExistingBulbForSunday = 0.0;
 
        double CostOfExistingBulbForSunday = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.sundayData, lastRow.getWattageOfBulb(), offloadCost,

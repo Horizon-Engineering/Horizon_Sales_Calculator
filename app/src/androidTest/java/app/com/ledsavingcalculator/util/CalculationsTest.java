@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.text.ParseException;
 
-import app.com.ledsavingcalculator.database.dao.ReplacementBulb;
+import app.com.ledsavingcalculator.database.dao.ExistingBulb;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -141,65 +141,65 @@ public class CalculationsTest {
     @Test
     public void getInitialLEDTest(){
         Calculations calculations = new Calculations();
-        float intialLedCost = calculations.getIntialLedCost(40, 202, 1680);
+        float intialLedCost = calculations.getIntialLedCost(40, 158, 280);
         assertThat(intialLedCost, is(406560f));
     }
+//
+//    @Test
+//    public  void getMonthlyCostTest(){
+//        Calculations cal = new Calculations();
+//
+//        Hours onload = new Hours(6,00);
+//        Hours peak = new Hours(6, 0);
+//        Hours offload = new Hours(4, 30);
+//
+//        TimeSlot sunday = new TimeSlot(onload, peak, offload);
+//        TimeSlot monday = new TimeSlot(onload, peak, offload);
+//        TimeSlot tuesday = new TimeSlot(onload, peak, offload);
+//        TimeSlot thursday = new TimeSlot(onload, peak, offload);
+//        TimeSlot friday = new TimeSlot(onload, peak, offload);
+//        TimeSlot sat = new TimeSlot(onload, peak, offload);
+//        TimeSlot wed = new TimeSlot(onload, peak, offload);
+//
+//        ReplacementBulb replacementBulb = new ReplacementBulb("Led", "Led", 54, 50000, 280);
+//
+//
+//        PerDayData perDy = new PerDayData(sunday, monday, tuesday,wed, thursday, friday, sat);
+//        float monthlyCostForExistingBulb = cal.getMonthlyCostForReplacementBulb(perDy, replacementBulb, 12.8, 17.5, 8.3, 280, 6);
+//
+//        assertThat(monthlyCostForExistingBulb, is(741.04f));
+//    }
+//
+//    @Test
+//    public void getMonthlyElectricityForLedTest(){
+//        Calculations calculations = new Calculations();
+//
+//        Hours onload = new Hours(6,0);
+//        Hours peak = new Hours(6, 0);
+//        Hours offload = new Hours(4, 30);
+//
+//        TimeSlot sunday = new TimeSlot(onload, peak, offload);
+//        TimeSlot monday = new TimeSlot(onload, peak, offload);
+//        TimeSlot tuesday = new TimeSlot(onload, peak, offload);
+//        TimeSlot thursday = new TimeSlot(onload, peak, offload);
+//        TimeSlot friday = new TimeSlot(onload, peak, offload);
+//        TimeSlot sat = new TimeSlot(onload, peak, offload);
+//        TimeSlot wed = new TimeSlot(onload, peak, offload);
+//
+//        ReplacementBulb replacementBulb = new ReplacementBulb("Fixture","LED", 100, 50000, 280);
+//        PerDayData perDy = new PerDayData(sunday, monday, tuesday,wed, thursday, friday, sat);
+//
+//        float monthlyCostForReplacementBulb = calculations.getMonthlyCostForReplacementBulb(perDy, replacementBulb, 1, 1, 1, 280, 1);
+//        assertThat(monthlyCostForReplacementBulb, is(228.63f));
+//    }
 
-    @Test
-    public  void getMonthlyCostTest(){
-        Calculations cal = new Calculations();
-
-        Hours onload = new Hours(6,00);
-        Hours peak = new Hours(6, 0);
-        Hours offload = new Hours(4, 30);
-
-        TimeSlot sunday = new TimeSlot(onload, peak, offload);
-        TimeSlot monday = new TimeSlot(onload, peak, offload);
-        TimeSlot tuesday = new TimeSlot(onload, peak, offload);
-        TimeSlot thursday = new TimeSlot(onload, peak, offload);
-        TimeSlot friday = new TimeSlot(onload, peak, offload);
-        TimeSlot sat = new TimeSlot(onload, peak, offload);
-        TimeSlot wed = new TimeSlot(onload, peak, offload);
-
-        ReplacementBulb replacementBulb = new ReplacementBulb("Led", "Led", 54, 50000, 280);
-
-
-        PerDayData perDy = new PerDayData(sunday, monday, tuesday,wed, thursday, friday, sat);
-        float monthlyCostForExistingBulb = cal.getMonthlyCostForReplacementBulb(perDy, replacementBulb, 12.8, 17.5, 8.3, 280, 6);
-
-        assertThat(monthlyCostForExistingBulb, is(741.04f));
-    }
-
-    @Test
-    public void getMonthlyElectricityForLedTest(){
-        Calculations calculations = new Calculations();
-
-        Hours onload = new Hours(6,0);
-        Hours peak = new Hours(6, 0);
-        Hours offload = new Hours(4, 30);
-
-        TimeSlot sunday = new TimeSlot(onload, peak, offload);
-        TimeSlot monday = new TimeSlot(onload, peak, offload);
-        TimeSlot tuesday = new TimeSlot(onload, peak, offload);
-        TimeSlot thursday = new TimeSlot(onload, peak, offload);
-        TimeSlot friday = new TimeSlot(onload, peak, offload);
-        TimeSlot sat = new TimeSlot(onload, peak, offload);
-        TimeSlot wed = new TimeSlot(onload, peak, offload);
-
-        ReplacementBulb replacementBulb = new ReplacementBulb("Fixture","LED", 100, 50000, 280);
-        PerDayData perDy = new PerDayData(sunday, monday, tuesday,wed, thursday, friday, sat);
-
-        float monthlyCostForReplacementBulb = calculations.getMonthlyCostForReplacementBulb(perDy, replacementBulb, 1, 1, 1, 280, 1);
-        assertThat(monthlyCostForReplacementBulb, is(228.63f));
-    }
-
-   /* @Test
+   @Test
     public void getTotalEnergySavings(){
 
 
-        Hours onload = new Hours(3,0);
-        Hours peak = new Hours(4, 0);
-        Hours offload = new Hours(6, 0);
+        Hours onload = new Hours(6,0);
+        Hours peak = new Hours(5, 30);
+        Hours offload = new Hours(4, 30);
 
         TimeSlot sunday = new TimeSlot(onload, peak, offload);
         TimeSlot monday = new TimeSlot(onload, peak, offload);
@@ -210,10 +210,10 @@ public class CalculationsTest {
         TimeSlot wed = new TimeSlot(onload, peak, offload);
 
 
-//        PerDayData perDy = new PerDayData(sunday, monday, tuesday,wed, thursday, friday, sat);
-//        Calculations calculations = new Calculations();
-//        Double totalEnergySaving = calculations.getTotalEnergySaving(50000, 3888.0, perDy, 515.0);
-//        assertThat(totalEnergySaving, is(45d));
+        PerDayData perDy = new PerDayData(sunday, monday, tuesday,wed, thursday, friday, sat);
+        Calculations calculations = new Calculations();
+        Double totalEnergySaving = calculations.getTotalEnergySaving(50000, 3888.0, perDy, 515.0);
+        assertThat(totalEnergySaving, is(45d));
     }
 
     @Test
@@ -221,8 +221,8 @@ public class CalculationsTest {
         Calculations calculations = new Calculations();
 
         ExistingBulb existingBulb = new ExistingBulb("CFL", 54, 25000, 3,6,54);
-        float costOfExistingBulbReplacement = calculations.getCostOfExistingBulbReplacement(existingBulb, 50000, 3);
+        float costOfExistingBulbReplacement = calculations.getCostOfExistingBulbReplacement(existingBulb, 50000, 515.11f);
         assertThat(costOfExistingBulbReplacement, is(3888.0f));
-    }*/
+    }
 }
 

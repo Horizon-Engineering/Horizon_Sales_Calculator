@@ -196,9 +196,21 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             double peakloadWinterPrice = (double) dataSnapshot.child("/winter/weekdays/peakload").getValue();
 
                             Calculations calculations1 = new Calculations();
+
+                            int getNoOfBulbsPerFixture = 0;
+                            int getNoOfFixtures=0;
+                            if(replacementBulbRecord.getTypeOfReplacement().equals("Fixture")){
+                                getNoOfBulbsPerFixture = 1;
+                                getNoOfFixtures = lastRow.getNoOfFixtures();
+                            } else {
+                                getNoOfBulbsPerFixture = lastRow.getNoOfBulbsPerFixture();
+                                getNoOfFixtures = lastRow.getNoOfFixtures();
+                            }
+
+
                             //Inital LED Installation cost
                             double intialLedCost = calculations1.getIntialLedCost(replacementBulbRecord.getCostOfReplacementbulb(),
-                                    replacementBulbRecord.getCostOfReplacementbulb(), lastRow.getNoOfBulbsPerFixture() * lastRow.getNoOfFixtures());
+                                    0, getNoOfBulbsPerFixture * getNoOfFixtures);
 
 
                             //Monthly electricity cost for  existing bulb in both winter and summer
@@ -212,16 +224,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             double monthlyEnergyCostForExisting = calculations1.getMonthlyCostForExistingBulb(totalHoursPerDay, lastRow, 1, 1, 1) * 100.00;
 
 
-                            int getNoOfBulbsPerFixture = 0;
-                            int getNoOfFixtures=0;
-                            if(replacementBulbRecord.getTypeOfReplacement().equals("Fixture")){
-                                getNoOfBulbsPerFixture = 1;
-                                getNoOfFixtures = lastRow.getNoOfFixtures();
-                            }
-                            else{
-                                getNoOfBulbsPerFixture = lastRow.getNoOfBulbsPerFixture();
-                                getNoOfFixtures = lastRow.getNoOfFixtures();
-                            }
+
 
                             //Monthly energy cost for LED Bulb
                             double monthlyEnergyCostForReplacementBulb = calculations1.getMonthlyCostForReplacementBulb(totalHoursPerDay,
@@ -242,8 +245,8 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
 
                             double monthlyCostSavingsForSummer = monthlyCostForExistingBulbSummer - monthlyCostForReplacementBulbForSummer;
                             double monthlyCostSavingsForWinter = monthlyCostForExistingBulbWinter - monthlyCostForReplacementBulbForWinter;
-                           Double totalEnergySaving = calculations1.getTotalEnergySaving(replacementBulbRecord.getLifeSpan(), costOfExistingBulbReplacement,
-                                   totalHoursPerDay, monthlyCostSavingsForWinter);
+                            Double totalEnergySaving = calculations1.getTotalEnergySaving(replacementBulbRecord.getLifeSpan(), costOfExistingBulbReplacement,
+                                    totalHoursPerDay, monthlyCostSavingsForWinter);
 
                             Results results = new Results();
 
@@ -257,7 +260,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             results.setEnergySavingSummer(energySaving);
                             results.setMonthlyCostSavingForSummer(monthlyCostSavingsForSummer);
                             results.setMonthlyCostSavingForWinter(monthlyCostSavingsForWinter);
-                            results.setTotalEnergySaving(totalEnergySaving);
+                           results.setTotalEnergySaving(totalEnergySaving);
                             results.setMonthlyEnergyCostForExisting(monthlyEnergyCostForExisting);
                             results.setMonthlyEnergyCostForReplacementBulb(monthlyEnergyCostForReplacementBulb);
 
