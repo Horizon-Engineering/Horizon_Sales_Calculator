@@ -216,13 +216,12 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:visibility="visible"
-            android:inputType="number|numberSigned"
             android:textColor="#ffffff"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="15dp"
             android:layout_alignBottom="@+id/textView11"
             android:layout_toEndOf="@+id/textView12"
-            android:numeric="decimal" />
+            android:inputType="numberDecimal" />
 
         <Button
             android:layout_width="wrap_content"
