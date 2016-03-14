@@ -20,15 +20,15 @@ import app.com.ledsavingcalculator.database.dao.ReplacementBulb;
 public class Calculations {
 
     public static final String ON_LOAD_START_TIME = "01/14/2012 7:00:00";
-    public static final String ON_LOAD_END_TIME = "01/14/2012 10:59:59";
+    public static final String ON_LOAD_END_TIME = "01/14/2012 11:00:00";
     public static final String ON_LOAD_EVN_START_TIME = "01/14/2012 17:00:00";
-    public static final String ON_LOAD_EVN_END_TIME = "01/14/2012 18:59:59";
+    public static final String ON_LOAD_EVN_END_TIME = "01/14/2012 19:00:00";
     public static final String PEAK_LOAD_START_TIME = "01/14/2012 11:00:00";
-    public static final String PEAK_LOAD_END_TIME = "01/14/2012 16:59:59";
-    public static final String OFF_LOAD_START_TIME = "01/14/2012 17:00:00";
-    public static final String OFF_LOAD_END_TIME = "01/14/2012 23:59:59";
+    public static final String PEAK_LOAD_END_TIME = "01/14/2012 17:00:00";
+    public static final String OFF_LOAD_START_TIME = "01/14/2012 19:00:00";
+    public static final String OFF_LOAD_END_TIME = "01/14/2012 24:00:00";
     public static final String OFF_LOAD_START_TIME_1 = "01/14/2012 1:00:00";
-    public static final String OFF_LOAD_END_TIME_1 = "01/14/2012 6:59:59";
+    public static final String OFF_LOAD_END_TIME_1 = "01/14/2012 7:00:00";
 
     float intialLedResult = (float) 0.00;
     float costOfExistingBulbReplacement = (float) 0.00;
@@ -55,15 +55,17 @@ public class Calculations {
             Date onLoadStartTime = format.parse(ON_LOAD_START_TIME);
             Date onLoadEndTime = format.parse(ON_LOAD_END_TIME);
             Date peakloadStartTime = format.parse(PEAK_LOAD_START_TIME);
+            Date onLoadStartTime1 = format.parse(ON_LOAD_EVN_START_TIME);
             Date peakloadEndTime = format.parse(PEAK_LOAD_END_TIME);
+            Date onLoadEndTime1 = format.parse(ON_LOAD_EVN_END_TIME);
             Date offloadStartTime = format.parse(OFF_LOAD_START_TIME);
             Date offloadEndTime = format.parse(OFF_LOAD_END_TIME);
             Date offloadEndTime1 = format.parse(OFF_LOAD_END_TIME_1);
             Date offloadStartTime1 = format.parse(OFF_LOAD_START_TIME_1);
 
-
             Hours onload = new Hours(0L, 0L);
             Hours peakload = new Hours(0L, 0L);
+            Hours onload1 = new Hours(0L, 0L);
             Hours offload = new Hours(0L, 0L);
             Hours offload1 = new Hours(0L, 0L);
 
@@ -83,6 +85,27 @@ public class Calculations {
                     onload = getTimeDifference(onLoadStartTime, onLoadEndTime);
                 }
             }
+
+            if (eventStartTime.getTime() >= onLoadStartTime1.getTime()
+                    && eventEndTime.getTime() <= onLoadEndTime1.getTime()) {
+                return new TimeSlot(getTimeDifference(eventStartTime, eventEndTime), peakload, offload);
+            } else if (eventEndTime.getTime() >= onLoadEndTime1.getTime()
+                    && eventStartTime.getTime() <= onLoadStartTime1.getTime()) {
+                onload1 = getTimeDifference(onLoadStartTime1, onLoadEndTime1);
+            } else if (eventStartTime.getTime() >= onLoadStartTime1.getTime()
+                    && eventEndTime.getTime() >= onLoadEndTime1.getTime()) {
+                onload1 = getTimeDifference(eventStartTime, onLoadEndTime1);
+            } else if (eventStartTime.getTime() <= onLoadStartTime1.getTime()) {
+                if (eventEndTime.getTime() <= onLoadEndTime1.getTime()) {
+                    onload1 = getTimeDifference(onLoadStartTime1, eventEndTime);
+                } else {
+                    onload1 = getTimeDifference(onLoadStartTime1, onLoadEndTime1);
+                }
+            }
+
+            onload = calculateOffLoad(onload, onload1);
+
+
 
             if (eventStartTime.getTime() >= peakloadStartTime.getTime()
                     && eventEndTime.getTime() <= peakloadEndTime.getTime()) {
@@ -253,13 +276,14 @@ public class Calculations {
 
     public PerDayData getTotalHoursPerDay(List<WeekViewEvent> events) throws ParseException {
 
-        TimeSlot sundayTotalHours = null;
-        TimeSlot mondayTotalHours = null;
-        TimeSlot tuesdayTotalHours = null;
-        TimeSlot thursdayTotalHours = null;
-        TimeSlot fridayTotalHours = null;
-        TimeSlot saturdayTotalHours = null;
-        TimeSlot wednesdayTotalHours = null;
+        //If day do not have the event then time slot will have zero values
+        TimeSlot sundayTotalHours = new TimeSlot();
+        TimeSlot mondayTotalHours = new TimeSlot();
+        TimeSlot tuesdayTotalHours = new TimeSlot();
+        TimeSlot thursdayTotalHours = new TimeSlot();
+        TimeSlot fridayTotalHours = new TimeSlot();
+        TimeSlot saturdayTotalHours = new TimeSlot();
+        TimeSlot wednesdayTotalHours = new TimeSlot();
 
         for (WeekViewEvent weekView : events) {
 
@@ -278,10 +302,10 @@ public class Calculations {
                 if (sundayTotalHours != null) {
                     TimeSlot sundayTotalHours1 = getHoursOfTime(startTime, endTime);
                     sundayTotalHours = addToObj(sundayTotalHours1, sundayTotalHours);
-                    new PerDayData(sundayTotalHours, null, null, null, null, null, null);
+                   // new PerDayData(sundayTotalHours, null, null, null, null, null, null);
                 } else {
                     sundayTotalHours = getHoursOfTime(startTime, endTime);
-                    new PerDayData(sundayTotalHours, null, null, null, null, null, null);
+                  //  new PerDayData(sundayTotalHours, null, null, null, null, null, null);
                 }
             }
             if (weekDay == 2) {
@@ -289,20 +313,20 @@ public class Calculations {
                 if (mondayTotalHours != null) {
                     TimeSlot mondayTotalHours1 = getHoursOfTime(startTime, endTime);
                     mondayTotalHours = addToObj(mondayTotalHours1, mondayTotalHours);
-                    new PerDayData(null, mondayTotalHours, null, null, null, null, null);
+                   // new PerDayData(null, mondayTotalHours, null, null, null, null, null);
                 } else {
                     mondayTotalHours = getHoursOfTime(startTime, endTime);
-                    new PerDayData(null, mondayTotalHours, null, null, null, null, null);
+                   // new PerDayData(null, mondayTotalHours, null, null, null, null, null);
                 }
             }
             if (weekDay == 3) {
                 if (tuesdayTotalHours != null) {
                     TimeSlot tuesdayTotalHours1 = getHoursOfTime(startTime, endTime);
                     tuesdayTotalHours = addToObj(tuesdayTotalHours1, tuesdayTotalHours);
-                    new PerDayData(null, tuesdayTotalHours, null, null, null, null, null);
+                   // new PerDayData(null, tuesdayTotalHours, null, null, null, null, null);
                 } else {
                     tuesdayTotalHours = getHoursOfTime(startTime, endTime);
-                    new PerDayData(null, null, tuesdayTotalHours, null, null, null, null);
+                  //  new PerDayData(null, null, tuesdayTotalHours, null, null, null, null);
                 }
             }
 
@@ -310,40 +334,40 @@ public class Calculations {
                 if (wednesdayTotalHours != null) {
                     TimeSlot wednesdayTotalHours1 = getHoursOfTime(startTime, endTime);
                     wednesdayTotalHours = addToObj(wednesdayTotalHours1, wednesdayTotalHours);
-                    new PerDayData(null, null, null, wednesdayTotalHours, null, null, null);
+                    //new PerDayData(null, null, null, wednesdayTotalHours, null, null, null);
                 } else {
                     wednesdayTotalHours = getHoursOfTime(startTime, endTime);
-                    new PerDayData(null, null, null, wednesdayTotalHours, null, null, null);
+                    //new PerDayData(null, null, null, wednesdayTotalHours, null, null, null);
                 }
             }
             if (weekDay == 5) {
                 if (thursdayTotalHours != null) {
                     TimeSlot thursdayTotalHours1 = getHoursOfTime(startTime, endTime);
                     thursdayTotalHours = addToObj(thursdayTotalHours1, thursdayTotalHours);
-                    new PerDayData(null, null, null, null, thursdayTotalHours, null, null);
+                    //new PerDayData(null, null, null, null, thursdayTotalHours, null, null);
                 } else {
                     thursdayTotalHours = getHoursOfTime(startTime, endTime);
-                    new PerDayData(null, null, null, null, thursdayTotalHours, null, null);
+                   // new PerDayData(null, null, null, null, thursdayTotalHours, null, null);
                 }
             }
             if (weekDay == 6) {
                 if (fridayTotalHours != null) {
                     TimeSlot fridayTotalHours1 = getHoursOfTime(startTime, endTime);
                     fridayTotalHours = addToObj(fridayTotalHours1, fridayTotalHours);
-                    new PerDayData(null, null, null, null, null, fridayTotalHours, null);
+                   // new PerDayData(null, null, null, null, null, fridayTotalHours, null);
                 } else {
                     fridayTotalHours = getHoursOfTime(startTime, endTime);
-                    new PerDayData(null, null, null, null, null, fridayTotalHours, null);
+                   // new PerDayData(null, null, null, null, null, fridayTotalHours, null);
                 }
             }
             if (weekDay == 7) {
                 if (saturdayTotalHours != null) {
                     TimeSlot saturdayTotalHours1 = getHoursOfTime(startTime, endTime);
                     saturdayTotalHours = addToObj(saturdayTotalHours1, saturdayTotalHours);
-                    new PerDayData(null, null, null, null, null, null, saturdayTotalHours);
+                    //new PerDayData(null, null, null, null, null, null, saturdayTotalHours);
                 } else {
                     saturdayTotalHours = getHoursOfTime(startTime, endTime);
-                    new PerDayData(null, null, null, null, null, null, saturdayTotalHours);
+                   // new PerDayData(null, null, null, null, null, null, saturdayTotalHours);
                 }
             }
 
@@ -382,18 +406,18 @@ public class Calculations {
         float peakloadMinToHour= 0.0f;
         DecimalFormat f = new DecimalFormat("##.00");
 
-        if(dayData.getOfLoad().getNumberOfMins()!= 0){
-          onloadMinToHour =(float) (dayData.getOnLoad().getNumberOfMins())/60;
+        if(dayData.getOnLoad().getNumberOfMins()!= 0){
+          onloadMinToHour = (float) ((dayData.getOnLoad().getNumberOfMins())/60.0);
             onloadMinToHour = Float.parseFloat(f.format(onloadMinToHour));
 
         }
         if(dayData.getOfLoad().getNumberOfMins()!= 0){
-            ofloadMinToHour = Float.valueOf(dayData.getOfLoad().getNumberOfMins()/60);
+            ofloadMinToHour = (float) (dayData.getOfLoad().getNumberOfMins()/60.0);
             ofloadMinToHour = Float.parseFloat(f.format(ofloadMinToHour));
         }
 
-        if(dayData.getOfLoad().getNumberOfMins()!= 0){
-            peakloadMinToHour = (float)(dayData.getPeakLoad().getNumberOfMins()) / 60;
+        if(dayData.getPeakLoad().getNumberOfMins()!= 0){
+            peakloadMinToHour = (float) ((dayData.getPeakLoad().getNumberOfMins()) / 60.0);
             peakloadMinToHour = Float.parseFloat(f.format(peakloadMinToHour));
         }
 
@@ -413,8 +437,8 @@ public class Calculations {
 
         Float totalEnergy = totalOnloadPrice + totalPeakloadPrice + totalOffloadPrice;
         MonthlyElectricityCostOfExistingBulb = totalEnergy * noOfBulbsPerFixture  * noOfFixtures;
-        MonthlyElectricityCostOfExistingBulb = Double.parseDouble(twoDForm.format(MonthlyElectricityCostOfExistingBulb));
-        return (float) MonthlyElectricityCostOfExistingBulb;
+        //MonthlyElectricityCostOfExistingBulb = Float.parseFloat(twoDForm.format(MonthlyElectricityCostOfExistingBulb));
+        return  Float.parseFloat(twoDForm.format(MonthlyElectricityCostOfExistingBulb));
     }
 
     public Double getMonthlyCostForExistingBulb(PerDayData totalHoursPerDay, ExistingBulb lastRow, double onloadCost, double peakloadCost, double offloadCost) {
@@ -423,8 +447,10 @@ public class Calculations {
 
     @NonNull
     private Double getaDouble(PerDayData totalHoursPerDay, ExistingBulb lastRow, double onloadCost, double peakloadCost, double offloadCost) {
-        double CostOfExistingBulbForSunday = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.sundayData, lastRow.getWattageOfBulb(), offloadCost,
-                offloadCost, offloadCost, lastRow.getNoOfFixtures(), lastRow.getNoOfBulbsPerFixture());
+       //double CostOfExistingBulbForSunday = 0.0;
+
+       double CostOfExistingBulbForSunday = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.sundayData, lastRow.getWattageOfBulb(), offloadCost,
+              offloadCost, offloadCost, lastRow.getNoOfFixtures(), lastRow.getNoOfBulbsPerFixture());
         double CostOfExistingBulbForMonday = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.mondayData, lastRow.getWattageOfBulb(), onloadCost,
                 peakloadCost, offloadCost, lastRow.getNoOfFixtures(), lastRow.getNoOfBulbsPerFixture());
         double CostOfExistingBulbForTuesday= getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.tuesdayData, lastRow.getWattageOfBulb(), onloadCost,
@@ -435,8 +461,9 @@ public class Calculations {
                 peakloadCost, offloadCost, lastRow.getNoOfFixtures(), lastRow.getNoOfBulbsPerFixture());
         double CostOfExistingBulbForWednesDay = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.wednesdayData, lastRow.getWattageOfBulb(), onloadCost,
                 peakloadCost, offloadCost, lastRow.getNoOfFixtures(), lastRow.getNoOfBulbsPerFixture());
+       // double CostOfExistingBulbForSaturday = 0.0;
         double CostOfExistingBulbForSaturday = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.saturdayData, lastRow.getWattageOfBulb(), offloadCost,
-                offloadCost, offloadCost, lastRow.getNoOfFixtures(), lastRow.getNoOfBulbsPerFixture());
+               offloadCost, offloadCost, lastRow.getNoOfFixtures(), lastRow.getNoOfBulbsPerFixture());
 
         double weekDevidedByMonth = (double)52/12;
 
@@ -450,8 +477,10 @@ public class Calculations {
 
 
     public float getMonthlyCostForReplacementBulb(PerDayData totalHoursPerDay, ReplacementBulb replacementBulbRecord, double onloadCost, double peakloadCost, double offloadCost, int noOfFixtures, int noOfBulbsPerFixture) {
-        float CostOfExistingBulbForSunday = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.sundayData, replacementBulbRecord.getWattageOfReplacementBulb(), offloadCost,
-                offloadCost, offloadCost, noOfFixtures, noOfBulbsPerFixture);
+     //float CostOfExistingBulbForSunday= 0.0f;
+
+       float CostOfExistingBulbForSunday = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.sundayData, replacementBulbRecord.getWattageOfReplacementBulb(), offloadCost,
+              offloadCost, offloadCost, noOfFixtures, noOfBulbsPerFixture);
         float CostOfExistingBulbForMonday = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.mondayData, replacementBulbRecord.getWattageOfReplacementBulb(), onloadCost,
                 peakloadCost, offloadCost, noOfFixtures, noOfBulbsPerFixture);
         float CostOfExistingBulbForTuesday= getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.tuesdayData, replacementBulbRecord.getWattageOfReplacementBulb(), onloadCost,
@@ -462,13 +491,15 @@ public class Calculations {
                 peakloadCost, offloadCost, noOfFixtures, noOfBulbsPerFixture);
         float CostOfExistingBulbForWednesDay = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.wednesdayData, replacementBulbRecord.getWattageOfReplacementBulb(), onloadCost,
                 peakloadCost, offloadCost, noOfFixtures,noOfBulbsPerFixture);
-        float CostOfExistingBulbForSaturday = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.saturdayData, replacementBulbRecord.getWattageOfReplacementBulb(), offloadCost,
-                offloadCost, offloadCost, noOfFixtures, noOfBulbsPerFixture);
+       float CostOfExistingBulbForSaturday = getWeeklyElectricityCostOfExistingBulb(totalHoursPerDay.saturdayData, replacementBulbRecord.getWattageOfReplacementBulb(), offloadCost,
+               offloadCost, offloadCost, noOfFixtures, noOfBulbsPerFixture);
+
+        //float CostOfExistingBulbForSaturday = 0.0f;
 
         float divideWeekByMonths = (float)(52.0/12.0);
 
-        float weeklyCost =  (CostOfExistingBulbForSunday + CostOfExistingBulbForMonday + CostOfExistingBulbForTuesday + CostOfExistingBulbForThursday +
-                CostOfExistingBulbForFriday +  CostOfExistingBulbForWednesDay + CostOfExistingBulbForSaturday) * divideWeekByMonths;
+        float weeklyCost =  (CostOfExistingBulbForSunday + CostOfExistingBulbForMonday  + CostOfExistingBulbForTuesday  + CostOfExistingBulbForThursday +
+                CostOfExistingBulbForFriday  +  CostOfExistingBulbForWednesDay  + CostOfExistingBulbForSaturday ) * divideWeekByMonths  ;
 
         DecimalFormat f = new DecimalFormat("##.00");
         weeklyCost = Float.parseFloat(f.format(weeklyCost));

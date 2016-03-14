@@ -242,8 +242,8 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
 
                             double monthlyCostSavingsForSummer = monthlyCostForExistingBulbSummer - monthlyCostForReplacementBulbForSummer;
                             double monthlyCostSavingsForWinter = monthlyCostForExistingBulbWinter - monthlyCostForReplacementBulbForWinter;
-                            Double totalEnergySaving = calculations1.getTotalEnergySaving(replacementBulbRecord.getLifeSpan(), costOfExistingBulbReplacement,
-                                    totalHoursPerDay, monthlyCostSavingsForWinter);
+                           Double totalEnergySaving = calculations1.getTotalEnergySaving(replacementBulbRecord.getLifeSpan(), costOfExistingBulbReplacement,
+                                   totalHoursPerDay, monthlyCostSavingsForWinter);
 
                             Results results = new Results();
 

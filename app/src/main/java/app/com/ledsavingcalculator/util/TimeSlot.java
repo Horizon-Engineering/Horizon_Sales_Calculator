@@ -13,6 +13,13 @@ public class TimeSlot {
         this.ofLoad = offload;
     }
 
+    //Empty hours/no event time solt
+    public TimeSlot() {
+        this.onLoad = new Hours(0, 0);
+        this.peakLoad = new Hours(0, 0);
+        this.ofLoad = new Hours(0, 0);
+    }
+
     public Hours getOnLoad() {
         return onLoad;
     }

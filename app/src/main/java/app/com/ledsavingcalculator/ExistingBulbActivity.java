@@ -54,18 +54,18 @@ public class ExistingBulbActivity extends AppCompatActivity {
 
         typeOfLigth = (Spinner)  findViewById(R.id.existingBulbType);
         numberOfFixture = (EditText)  findViewById(R.id.numberOfFixture);
-        //numberOfFixture.setText("54");
+       //numberOfFixture.setText("280");
         numberOfBulbPerFixture = (EditText)  findViewById(R.id.numberOfBulbPerFixture);
-       // numberOfBulbPerFixture.setText("6");
+      //numberOfBulbPerFixture.setText("6");
         selectLifeSpanType = (Spinner)  findViewById(R.id.selectLifeSpanType);
         costOfExistingBulb = (EditText)  findViewById(R.id.costOfExistingBulb);
-       // costOfExistingBulb.setText("3");
+     // costOfExistingBulb.setText("3");
         ExistingBulbWattage = (EditText) findViewById(R.id.ExistingBulbWattage);
-       // ExistingBulbWattage.setText("54");
+      // ExistingBulbWattage.setText("54");
         enteredTypeOfBulb = (EditText) findViewById(R.id.enteredTypeOfBulb);
         enterTypeOfBulbLable = (TextView) findViewById(R.id.enterTypeOfBulbLable);
         lifespanHour = (EditText) findViewById(R.id.lifespanHour);
-        //lifespanHour.setText("25000");
+      // lifespanHour.setText("25000");
         hourUnit =  findViewById(R.id.hourUnit);
         monthUnit =  findViewById(R.id.monthUnit);
         nextBtn =(Button) findViewById(R.id.nextBtn);
@@ -157,19 +157,19 @@ public class ExistingBulbActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if( numberOfFixture.getText().toString().equals("")) {
-                   // numberOfFixture.setError("Number of Fixture is required");
+                    numberOfFixture.setError("Number of Fixture is required");
                 }
                 else if(numberOfBulbPerFixture.getText().toString().trim().equals("")){
-                   // numberOfBulbPerFixture.setError("Number of bulb is required");
+                    numberOfBulbPerFixture.setError("Number of bulb is required");
                 }
                 else if(lifespanHour.getText().toString().trim().equals("")){
-                   // lifespanHour.setError("Life Span is required");
+                    lifespanHour.setError("Life Span is required");
                 }
                 else if(ExistingBulbWattage.getText().toString().trim().equals("")){
-                    //ExistingBulbWattage.setError("Wattage of bulb is required");
+                    ExistingBulbWattage.setError("Wattage of bulb is required");
                 }
                 else if(costOfExistingBulb.getText().toString().trim().equals("")){
-                   // costOfExistingBulb.setError("Cost of bulb is required");
+                    costOfExistingBulb.setError("Cost of bulb is required");
                 }
                 else {
 

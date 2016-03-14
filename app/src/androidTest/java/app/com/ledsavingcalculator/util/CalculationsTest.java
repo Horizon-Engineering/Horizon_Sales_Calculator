@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.text.ParseException;
 
-import app.com.ledsavingcalculator.database.dao.ExistingBulb;
 import app.com.ledsavingcalculator.database.dao.ReplacementBulb;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,13 +15,13 @@ public class CalculationsTest {
     @Test
     public  void testGetHourTime() throws ParseException {
         Calculations calculations = new Calculations();
-        TimeSlot numberOfHours = calculations.getHoursOfTime(" 07:00:00", " 10:59:00");
-        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(3L));
-        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(59L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(0L));
+        TimeSlot numberOfHours = calculations.getHoursOfTime(" 06:30:00", " 23:00:00");
+        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(6L));
+        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(0L));
+        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(6L));
         assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(0L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(0L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(0L));
+        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(4L));
+        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(30L));
 
         numberOfHours = calculations.getHoursOfTime(" 11:00:00", " 16:59:00");
         assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(0L));
@@ -32,69 +31,69 @@ public class CalculationsTest {
         assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(0L));
         assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(0L));
 
-        numberOfHours = calculations.getHoursOfTime(" 17:00:00", " 23:59:00");
-        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(0L));
-        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(0L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(0L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(0L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(6L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(59L));
-
-        numberOfHours = calculations.getHoursOfTime(" 1:00:00", " 6:59:00");
-        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(0L));
-        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(0L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(0L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(0L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(5L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(59L));
-
-        numberOfHours = calculations.getHoursOfTime(" 7:00:00", " 11:30:00");
-        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(3L));
-        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(59L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(0L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(30L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(0L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(0L));
-
-        numberOfHours = calculations.getHoursOfTime(" 14:00:00", " 20:30:00");
-        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(0L));
-        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(0L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(2L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(59L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(3L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(30L));
-
-        numberOfHours = calculations.getHoursOfTime(" 8:00:00", " 20:30:00");
-        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(2L));
-        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(59L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(5L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(59L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(3L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(30L));
-
-        numberOfHours = calculations.getHoursOfTime(" 15:00:00", " 22:00:00");
-        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(0L));
-        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(0L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(1L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(59L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(5L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(0L));
-
-        numberOfHours = calculations.getHoursOfTime(" 1:30:00", " 14:30:00");
-        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(3L));
-        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(59L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(3L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(30L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(5L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(29L));
-
-        numberOfHours = calculations.getHoursOfTime(" 1:0:00", " 23:59:00");
-        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(3L));
-        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(59L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(5L));
-        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(59L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(12L));
-        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(58L));
+//        numberOfHours = calculations.getHoursOfTime(" 17:00:00", " 23:59:00");
+//        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(0L));
+//        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(0L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(0L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(0L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(6L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(59L));
+//
+//        numberOfHours = calculations.getHoursOfTime(" 1:00:00", " 6:59:00");
+//        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(0L));
+//        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(0L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(0L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(0L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(5L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(59L));
+//
+//        numberOfHours = calculations.getHoursOfTime(" 7:00:00", " 11:30:00");
+//        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(3L));
+//        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(59L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(0L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(30L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(0L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(0L));
+//
+//        numberOfHours = calculations.getHoursOfTime(" 14:00:00", " 20:30:00");
+//        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(0L));
+//        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(0L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(2L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(59L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(3L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(30L));
+//
+//        numberOfHours = calculations.getHoursOfTime(" 8:00:00", " 20:30:00");
+//        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(2L));
+//        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(59L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(5L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(59L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(3L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(30L));
+//
+//        numberOfHours = calculations.getHoursOfTime(" 15:00:00", " 22:00:00");
+//        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(0L));
+//        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(0L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(1L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(59L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(5L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(0L));
+//
+//        numberOfHours = calculations.getHoursOfTime(" 1:30:00", " 14:30:00");
+//        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(3L));
+//        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(59L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(3L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(30L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(5L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(29L));
+//
+//        numberOfHours = calculations.getHoursOfTime(" 1:0:00", " 23:59:00");
+//        assertThat(numberOfHours.getOnLoad().getNumberOfHours(), is(3L));
+//        assertThat(numberOfHours.getOnLoad().getNumberOfMins(), is(59L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfHours(), is(5L));
+//        assertThat(numberOfHours.getPeakLoad().getNumberOfMins(), is(59L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfHours(), is(12L));
+//        assertThat(numberOfHours.getOfLoad().getNumberOfMins(), is(58L));
     }
 
 /*    @Test
@@ -150,9 +149,9 @@ public class CalculationsTest {
     public  void getMonthlyCostTest(){
         Calculations cal = new Calculations();
 
-        Hours onload = new Hours(3,0);
-        Hours peak = new Hours(4, 0);
-        Hours offload = new Hours(6, 0);
+        Hours onload = new Hours(6,00);
+        Hours peak = new Hours(6, 0);
+        Hours offload = new Hours(4, 30);
 
         TimeSlot sunday = new TimeSlot(onload, peak, offload);
         TimeSlot monday = new TimeSlot(onload, peak, offload);
@@ -162,22 +161,22 @@ public class CalculationsTest {
         TimeSlot sat = new TimeSlot(onload, peak, offload);
         TimeSlot wed = new TimeSlot(onload, peak, offload);
 
-        ExistingBulb existingBulb = new ExistingBulb("CFL", 54, 25000, 202,6,54);
+        ReplacementBulb replacementBulb = new ReplacementBulb("Led", "Led", 54, 50000, 280);
 
 
         PerDayData perDy = new PerDayData(sunday, monday, tuesday,wed, thursday, friday, sat);
-        Double monthlyCostForExistingBulb = cal.getMonthlyCostForExistingBulb(perDy, existingBulb, 17.5, 12.5, 8.3);
+        float monthlyCostForExistingBulb = cal.getMonthlyCostForReplacementBulb(perDy, replacementBulb, 12.8, 17.5, 8.3, 280, 6);
 
-        assertThat(monthlyCostForExistingBulb, is(741.04d));
+        assertThat(monthlyCostForExistingBulb, is(741.04f));
     }
 
     @Test
     public void getMonthlyElectricityForLedTest(){
         Calculations calculations = new Calculations();
 
-        Hours onload = new Hours(3,0);
-        Hours peak = new Hours(4, 0);
-        Hours offload = new Hours(6, 0);
+        Hours onload = new Hours(6,0);
+        Hours peak = new Hours(6, 0);
+        Hours offload = new Hours(4, 30);
 
         TimeSlot sunday = new TimeSlot(onload, peak, offload);
         TimeSlot monday = new TimeSlot(onload, peak, offload);
@@ -187,14 +186,14 @@ public class CalculationsTest {
         TimeSlot sat = new TimeSlot(onload, peak, offload);
         TimeSlot wed = new TimeSlot(onload, peak, offload);
 
-        ReplacementBulb replacementBulb = new ReplacementBulb("Fixture","LED", 100, 50000,208);
+        ReplacementBulb replacementBulb = new ReplacementBulb("Fixture","LED", 100, 50000, 280);
         PerDayData perDy = new PerDayData(sunday, monday, tuesday,wed, thursday, friday, sat);
 
-        float monthlyCostForReplacementBulb = calculations.getMonthlyCostForReplacementBulb(perDy, replacementBulb, 1, 1, 1, 54, 1);
+        float monthlyCostForReplacementBulb = calculations.getMonthlyCostForReplacementBulb(perDy, replacementBulb, 1, 1, 1, 280, 1);
         assertThat(monthlyCostForReplacementBulb, is(228.63f));
     }
 
-    @Test
+   /* @Test
     public void getTotalEnergySavings(){
 
 
@@ -224,6 +223,6 @@ public class CalculationsTest {
         ExistingBulb existingBulb = new ExistingBulb("CFL", 54, 25000, 3,6,54);
         float costOfExistingBulbReplacement = calculations.getCostOfExistingBulbReplacement(existingBulb, 50000, 3);
         assertThat(costOfExistingBulbReplacement, is(3888.0f));
-    }
+    }*/
 }
 

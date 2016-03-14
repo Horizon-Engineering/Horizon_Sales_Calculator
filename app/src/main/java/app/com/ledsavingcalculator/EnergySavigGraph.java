@@ -42,10 +42,17 @@ public class EnergySavigGraph extends Activity{
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getBaseContext());
 
         Button nextBtn = (Button) findViewById(R.id.nextBtn);
+        Button backBtn = (Button) findViewById(R.id.backBtn);
         TextView existingPower = (TextView) findViewById(R.id.existingPower);
         TextView replacementPower = (TextView) findViewById(R.id.replacementPower);
 
-
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startNewActivity = new Intent(getBaseContext(), CostSavingGraph.class);
+                startActivity(startNewActivity);
+            }
+        });
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +79,7 @@ public class EnergySavigGraph extends Activity{
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
         staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                 new DataPoint(0, monthlyEnergyCostForExisting),
                 new DataPoint(1, monthlyEnergyCostForExisting),
                 new DataPoint(2, monthlyEnergyCostForExisting),
@@ -87,7 +94,7 @@ public class EnergySavigGraph extends Activity{
                 new DataPoint(11,monthlyEnergyCostForExisting)
         });
 
-        LineGraphSeries<DataPoint> series1 = new LineGraphSeries<DataPoint>(new DataPoint[]{
+        LineGraphSeries<DataPoint> series1 = new LineGraphSeries<>(new DataPoint[]{
                 new DataPoint(0, monthlyEnergyCostReplacement),
                 new DataPoint(1, monthlyEnergyCostReplacement),
                 new DataPoint(2, monthlyEnergyCostReplacement),
