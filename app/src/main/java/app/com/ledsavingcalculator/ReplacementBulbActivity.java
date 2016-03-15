@@ -51,7 +51,7 @@ public class ReplacementBulbActivity extends Activity {
         nextBtn = findViewById(R.id.nextBtn);
 
         replacmentType.setText("LED");
-        replacmentType.setFocusable(false);
+       // replacmentType.setFocusable(false);
         replacmentType.setClickable(true);
 
         //set font for activity

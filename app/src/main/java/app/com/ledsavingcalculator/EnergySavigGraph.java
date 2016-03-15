@@ -135,7 +135,7 @@ public class EnergySavigGraph extends Activity{
 
         graphView.getLegendRenderer().setVisible(true);
         graphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-
+        graphView.getSecondScale().setMinY(0);
         graphView.setTitle("Energy Saving Graph");
         graphView.setTitleColor(Color.BLACK);
         graphView.setBackgroundColor(Color.WHITE);
@@ -146,7 +146,7 @@ public class EnergySavigGraph extends Activity{
 
 
     public void writedata(Bitmap bitmap, String filename) {
-
+        /*
         String state;
         state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -166,6 +166,15 @@ public class EnergySavigGraph extends Activity{
                 e.printStackTrace();
             }
         }
+        */
+        FileOutputStream outputStream;
 
+        try {
+            outputStream = openFileOutput(filename, MODE_PRIVATE);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

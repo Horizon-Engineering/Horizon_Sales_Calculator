@@ -114,7 +114,7 @@ public class CostSavingGraph extends Activity {
 
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
-        staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
+        staticLabelsFormatter.setHorizontalLabels(new String[] {"Ja", "Fe", "Ma", "Ap","Ma", "Ju", "Ju", "Au", "Se", "Oc", "No", "De"});
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                 new DataPoint(0, monthlyCostSavingsForWinter),
@@ -147,15 +147,15 @@ public class CostSavingGraph extends Activity {
         });
 
         series.setColor(Color.RED);
-        series.setTitle("Existing");
+        series.setTitle("Existing System");
 
         series1.setColor(Color.BLUE);
-        series1.setTitle("Replacement");
-
+        series1.setTitle("HORIZON-ILS™");
+        graphView.getSecondScale().setMinY(0);
         graphView.getLegendRenderer().setVisible(true);
         graphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
-        graphView.setTitle("Cost Saving Graph");
+        graphView.setTitle("Energy Expense for Lighting System");
         graphView.setTitleColor(Color.BLACK);
         graphView.setBackgroundColor(Color.WHITE);
 
@@ -165,6 +165,7 @@ public class CostSavingGraph extends Activity {
 
 
     public void writedata(Bitmap bitmap, String filename) {
+        /*
         String state;
         state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -174,7 +175,6 @@ public class CostSavingGraph extends Activity {
             if (!dir.exists()) {
                 dir.mkdir();
             }
-            File file = new File(dir, filename);
             try {
                 FileOutputStream fos = new FileOutputStream(file);
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
@@ -184,7 +184,17 @@ public class CostSavingGraph extends Activity {
                 e.printStackTrace();
             }
         }
+        */
 
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = openFileOutput(filename, MODE_PRIVATE);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

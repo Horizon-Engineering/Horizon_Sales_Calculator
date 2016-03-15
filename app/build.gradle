@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "app.example.com.ledsavingcalculator"
-        minSdkVersion 21
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -30,16 +30,16 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':week_view_library')
     testCompile 'junit:junit:4.12'
+    androidTestCompile 'junit:junit:4.12'
+    compile files('build/tmp/activation.jar')
+    compile files('build/tmp/additionnal.jar')
+    compile files('build/tmp/mail.jar')
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.j256.ormlite:ormlite-jdbc:4.48'
     compile 'com.h2database:h2:1.4.191'
-    compile 'com.firebase:firebase-client-android:2.2.3'
-    androidTestCompile 'junit:junit:4.12'
+    compile 'com.firebase:firebase-client-android:2.3.1'
     compile 'com.jjoe64:graphview:4.0.1'
     compile 'com.itextpdf:itextpdf:5.5.8'
-    compile files('build/tmp/activation.jar')
-    compile files('build/tmp/additionnal.jar')
-    compile files('build/tmp/mail.jar')
 }
