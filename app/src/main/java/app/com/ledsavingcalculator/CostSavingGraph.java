@@ -116,7 +116,6 @@ public class CostSavingGraph extends Activity {
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
         staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-        graphView.getGridLabelRenderer().setNumHorizontalLabels(11);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                 new DataPoint(0, monthlyCostSavingsForWinter),
                 new DataPoint(1, monthlyCostSavingsForWinter),

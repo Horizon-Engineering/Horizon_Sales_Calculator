@@ -144,7 +144,15 @@ public class SendEmail extends AppCompatActivity {
                     new AsyncTask<Void, Void, Void>() {
 
                         @Override
-                        protected void onPreExecute() {}
+                        protected void onPreExecute() {
+                            emailadd.setText("");
+                            contactname.setText("");
+                            companyname.setText("");
+                            facilitysize.setText("");
+                            designation.setText("");
+                            address.setText("");
+                            Toast.makeText(SendEmail.this, "Send successfully", Toast.LENGTH_SHORT).show();
+                        }
                         @Override
                         protected Void doInBackground(Void... params)
                         {

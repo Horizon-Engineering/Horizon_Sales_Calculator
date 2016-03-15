@@ -94,6 +94,7 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/emailadd"
+            android:singleLine="true"
             android:layout_alignBottom="@+id/textView36"
             android:layout_alignEnd="@+id/nextBtn" />
 
@@ -102,6 +103,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
+            android:singleLine="true"
             android:id="@+id/contactname"
             android:layout_alignBottom="@+id/textView34"
             android:layout_alignEnd="@+id/nextBtn" />
@@ -111,6 +113,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/companyname"
             android:ems="10"
+            android:singleLine="true"
             android:layout_above="@+id/textView33"
             android:layout_alignEnd="@+id/nextBtn" />
 
@@ -120,12 +123,14 @@
             android:inputType="number"
             android:ems="10"
             android:id="@+id/facilitysize"
+            android:singleLine="true"
             android:layout_above="@+id/textView34"
             android:layout_alignStart="@+id/contactname" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:id="@+id/designation"
             android:ems="10"
             android:layout_above="@+id/textView36"
@@ -145,6 +150,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:id="@+id/address"
             android:ems="10"
             android:layout_alignBottom="@+id/textView37"
