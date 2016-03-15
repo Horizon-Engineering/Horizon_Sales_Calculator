@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -37,4 +38,8 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.2.3'
     androidTestCompile 'junit:junit:4.12'
     compile 'com.jjoe64:graphview:4.0.1'
+    compile 'com.itextpdf:itextpdf:5.5.8'
+    compile files('build/tmp/activation.jar')
+    compile files('build/tmp/additionnal.jar')
+    compile files('build/tmp/mail.jar')
 }

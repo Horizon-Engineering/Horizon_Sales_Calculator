@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="false"
+    android:background="#091929">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        android:paddingTop="0dp">
+        <FrameLayout
+            android:layout_width="280dp"
+            android:layout_height="70dp"
+            android:id="@+id/frameLayout">
+
+            <ImageView
+                android:layout_width="186dp"
+                android:layout_height="66dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/horizon_white"
+                android:layout_marginLeft="10dp" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Company Name:"
+            android:textColor="@color/white"
+            android:id="@+id/textView32"
+            android:layout_below="@+id/frameLayout"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="70dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Facility size:"
+            android:textColor="@color/white"
+            android:id="@+id/textView33"
+            android:layout_below="@+id/textView32"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Contact Name:"
+            android:textColor="@color/white"
+            android:id="@+id/textView34"
+            android:layout_below="@+id/textView33"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Designation:"
+            android:textColor="@color/white"
+            android:id="@+id/textView35"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/textView34"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Email:"
+            android:textColor="@color/white"
+            android:id="@+id/textView36"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/textView35"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Generate Send"
+            android:id="@+id/nextBtn"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/toggle_full_background"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/emailadd"
+            android:layout_alignBottom="@+id/textView36"
+            android:layout_alignEnd="@+id/nextBtn" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/contactname"
+            android:layout_alignBottom="@+id/textView34"
+            android:layout_alignEnd="@+id/nextBtn" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/companyname"
+            android:ems="10"
+            android:layout_above="@+id/textView33"
+            android:layout_alignEnd="@+id/nextBtn" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/facilitysize"
+            android:layout_above="@+id/textView34"
+            android:layout_alignStart="@+id/contactname" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/designation"
+            android:ems="10"
+            android:layout_above="@+id/textView36"
+            android:layout_alignStart="@+id/emailadd" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Address:"
+            android:textColor="@color/white"
+            android:id="@+id/textView37"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/textView36"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/address"
+            android:ems="10"
+            android:layout_alignBottom="@+id/textView37"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+</ScrollView>

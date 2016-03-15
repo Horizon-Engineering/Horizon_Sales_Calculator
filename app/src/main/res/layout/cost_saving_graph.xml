@@ -6,8 +6,7 @@
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
         android:layout_height="200dip"
-        android:id="@+id/graph"
-        android:layout_toEndOf="@+id/textView29" />
+        android:id="@+id/graph" />
 
     <Button
         android:layout_width="wrap_content"
@@ -28,38 +27,36 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Electicity Cost PerMonth for Existing System "
+        android:text="Existing System Cost Saving"
         android:id="@+id/textView19"
-        android:layout_alignBottom="@+id/textView20"
+        android:layout_below="@+id/textView20"
         android:layout_alignParentStart="true" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Electicity Cost PerMonth for Replacement System "
-        android:layout_alignEnd="@+id/textView19"
-        android:layout_below="@+id/graph"
-        android:layout_above="@+id/backBtn"
+        android:text="Replacement System Cost Saving"
         android:id="@+id/textView20"
-        android:layout_marginTop="30dp" />
+        android:layout_below="@+id/textView30"
+        android:layout_alignParentStart="true" />
+
 
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/existingCost"
-        android:layout_above="@+id/textView19"
-        android:layout_toEndOf="@+id/textView20"
-        android:layout_marginStart="111dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/existingCost"
         android:text="existingCost"
-        android:layout_alignTop="@+id/textView20" />
+        android:layout_alignTop="@+id/textView20"
+        android:layout_alignEnd="@+id/textView30" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/replacementCost"
+        android:text="replacement"
         android:layout_below="@+id/existingCost"
-        android:layout_alignEnd="@+id/existingCost"
-        android:text="replacement" />
+        android:layout_alignStart="@+id/existingCost" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,19 +76,7 @@
         android:text="CAD $"
         android:id="@+id/textView25"
         android:layout_below="@+id/existingCost"
-        android:layout_alignStart="@+id/textView21" />
-
-    <TextView
-        android:layout_height="fill_parent"
-        android:layout_width="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Cost"
-        android:gravity="center"
-        android:id="@+id/textView29"
-        android:rotation="-90"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/graph" />
+        android:layout_toEndOf="@+id/textView30" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -99,9 +84,8 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Months"
         android:id="@+id/textView30"
-        android:layout_above="@+id/textView21"
         android:layout_below="@+id/graph"
-        android:layout_toStartOf="@+id/replacementCost" />
+        android:layout_alignStart="@+id/nextBtn" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -109,7 +93,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="CAD $"
         android:id="@+id/textView22"
-        android:layout_alignTop="@+id/textView21"
-        android:layout_alignStart="@+id/textView21" />
+        android:layout_alignTop="@+id/existingCost"
+        android:layout_toEndOf="@+id/existingCost" />
 
 </RelativeLayout>

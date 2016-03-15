@@ -3,11 +3,14 @@ package app.com.ledsavingcalculator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,6 +21,10 @@ import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -26,8 +33,9 @@ import app.com.ledsavingcalculator.database.DataBaseHelper;
 import app.com.ledsavingcalculator.database.dao.Results;
 
 public class CostSavingGraph extends Activity {
-
+    GraphView graphView;
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cost_saving_graph);
 
@@ -61,6 +69,11 @@ public class CostSavingGraph extends Activity {
             public void onClick(View v) {
                 Intent startNewActivity = new Intent(getBaseContext(), EnergySavigGraph.class);
                 startActivity(startNewActivity);
+                View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+                View screenView = rootView.getRootView();
+                screenView.setDrawingCacheEnabled(true);
+                Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 0, graphView.getWidth(), graphView.getHeight());
+                writedata(bitmap, "cost.png");
             }
         });
 
@@ -81,7 +94,7 @@ public class CostSavingGraph extends Activity {
             e.printStackTrace();
         }
 
-        GraphView graphView = (GraphView) findViewById(R.id.graph);
+        graphView = (GraphView) findViewById(R.id.graph);
         TextView existingCost = (TextView) findViewById(R.id.existingCost);
         TextView replacement = (TextView) findViewById(R.id.replacementCost);
 
@@ -103,6 +116,7 @@ public class CostSavingGraph extends Activity {
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
         staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+        graphView.getGridLabelRenderer().setNumHorizontalLabels(11);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                 new DataPoint(0, monthlyCostSavingsForWinter),
                 new DataPoint(1, monthlyCostSavingsForWinter),
@@ -148,6 +162,30 @@ public class CostSavingGraph extends Activity {
 
         graphView.addSeries(series1);
         graphView.addSeries(series);
+    }
+
+
+    public void writedata(Bitmap bitmap, String filename) {
+        String state;
+        state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+
+            File root = Environment.getExternalStorageDirectory();
+            File dir = new File(root.getAbsolutePath() + "/PdfTest");
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            File file = new File(dir, filename);
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 }

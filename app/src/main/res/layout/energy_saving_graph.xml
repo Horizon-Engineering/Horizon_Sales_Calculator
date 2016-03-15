@@ -6,8 +6,7 @@
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
         android:layout_height="200dip"
-        android:id="@+id/graph"
-        android:layout_toEndOf="@+id/textView29" />
+        android:id="@+id/graph" />
 
     <Button
         android:layout_width="wrap_content"
@@ -28,7 +27,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Power Consumption By Existing System"
+        android:text="Existing System Power"
         android:id="@+id/textView23"
         android:layout_above="@+id/backBtn"
         android:layout_alignParentStart="true"
@@ -37,11 +36,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Power Consumption By Replacement System"
-        android:layout_below="@+id/graph"
-        android:layout_alignEnd="@+id/textView23"
+        android:text="Replacement System Power"
         android:id="@+id/textView24"
-        android:layout_marginTop="20dp" />
+        android:layout_below="@+id/textView31"
+        android:layout_alignParentStart="true" />
 
     <LinearLayout
         android:layout_width="400dp"
@@ -58,9 +56,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/replacementPower"
         android:text="replacement"
-        android:layout_alignTop="@+id/textView27"
-        android:layout_toStartOf="@+id/textView27"
-        android:layout_marginEnd="38dp" />
+        android:layout_below="@+id/existingPower"
+        android:layout_alignStart="@+id/existingPower" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -68,8 +65,8 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="KWh/month"
         android:id="@+id/textView27"
-        android:layout_alignTop="@+id/textView24"
-        android:layout_toStartOf="@+id/nextBtn" />
+        android:layout_alignTop="@+id/textView23"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,8 +74,8 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="KWh/month"
         android:id="@+id/textView26"
-        android:layout_alignTop="@+id/existingPower"
-        android:layout_toEndOf="@+id/textView28" />
+        android:layout_below="@+id/textView31"
+        android:layout_toEndOf="@+id/textView31" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -92,20 +89,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/existingPower"
         android:text="replacement"
-        android:layout_below="@+id/textView24"
-        android:layout_alignStart="@+id/replacementPower" />
-
-    <TextView
-        android:layout_height="fill_parent"
-        android:layout_width="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="KWh"
-        android:gravity="center"
-        android:id="@+id/textView29"
-        android:rotation="-90"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/textView23" />
+        android:layout_below="@+id/textView31"
+        android:layout_toStartOf="@+id/textView26" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -113,7 +98,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Months"
         android:id="@+id/textView31"
-        android:layout_above="@+id/replacementPower"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/graph"
+        android:layout_alignEnd="@+id/textView28" />
 
 </RelativeLayout>

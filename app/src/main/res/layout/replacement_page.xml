@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0dp"
-            android:text="Repalcement Light"
+            android:text="Replacement Light"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:fontFamily="@android:string/paste"
             android:textColor="#ffffff"
