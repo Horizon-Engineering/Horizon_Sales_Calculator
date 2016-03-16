@@ -117,7 +117,7 @@
             android:dropDownWidth="wrap_content"
             android:clickable="true"
             android:textColor="#ffffff"
-            android:prompt="@string/selectRegion"
+            android:prompt="@string/selectLight"
             android:spinnerMode="dialog"
             android:background="#FFFFFFFF"
             android:layout_alignParentEnd="true"
@@ -135,7 +135,7 @@
             android:textColor="#ffffff"
             android:layout_below="@+id/replacmentType"
             android:layout_alignEnd="@+id/textView4"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="70dp" />
 
         <EditText
             android:id="@+id/wattageOfReplacementbulb"
@@ -147,10 +147,10 @@
             android:inputType="number|numberSigned"
             android:textColor="#ffffff"
             android:layout_alignEnd="@+id/replacmentType"
-            android:layout_alignBottom="@+id/textView7"
             android:layout_toEndOf="@+id/textView7"
-            android:layout_alignTop="@+id/textView7"
-            android:layout_alignStart="@+id/replacmentType" />
+            android:layout_alignStart="@+id/replacmentType"
+            android:layout_alignBottom="@+id/textView7"
+            android:layout_alignTop="@+id/textView7" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -200,9 +200,9 @@
             android:id="@+id/textView10"
             android:singleLine="true"
             android:textColor="#ffffff"
-            android:layout_below="@+id/replacementLifeSpan"
-            android:layout_alignEnd="@+id/replacementLifeSpan"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:layout_alignEnd="@+id/radioGroupId"
+            android:layout_below="@+id/replacementLifeSpan" />
 
         <TextView
             android:id="@+id/textView11"
@@ -213,10 +213,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:fontFamily="@android:string/paste"
             android:textColor="#ffffff"
-            android:layout_below="@+id/textView10"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="39dp"
-            android:layout_alignEnd="@+id/textView7" />
+            android:layout_alignEnd="@+id/textView7"
+            android:layout_below="@+id/textView10" />
 
         <EditText
             android:id="@+id/costOfReplacement"
@@ -261,6 +260,33 @@
             android:paddingRight="0dp"
             android:layout_alignTop="@+id/costOfReplacement"
             android:layout_alignStart="@+id/replacementLifeSpan" />
+
+        <TextView
+            android:id="@+id/typeOfBulbLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:text="Enter the Type Of Bulb"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:fontFamily="@android:string/paste"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/replacmentType"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="integer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="visible"
+            android:inputType="text"
+            android:textColor="#ffffff"
+            android:layout_alignStart="@+id/replacmentType"
+            android:layout_alignEnd="@+id/textView10"
+            android:layout_below="@+id/replacmentType"
+            android:layout_alignBottom="@+id/typeOfBulbLabel"
+            android:id="@+id/typeOfBulb" />
     </RelativeLayout>
 
 </ScrollView>
