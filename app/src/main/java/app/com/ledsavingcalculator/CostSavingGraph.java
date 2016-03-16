@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -17,14 +16,13 @@ import android.widget.TextView;
 import com.j256.ormlite.dao.Dao;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -34,6 +32,7 @@ import app.com.ledsavingcalculator.database.dao.Results;
 
 public class CostSavingGraph extends Activity {
     GraphView graphView;
+    GraphView bargraphView;
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
@@ -95,9 +94,9 @@ public class CostSavingGraph extends Activity {
         }
 
         graphView = (GraphView) findViewById(R.id.graph);
+        bargraphView = (GraphView) findViewById(R.id.barGraph);
         TextView existingCost = (TextView) findViewById(R.id.existingCost);
         TextView replacement = (TextView) findViewById(R.id.replacementCost);
-
 
 
         double totalSavingsForExistings = (monthlyCostSavingsForSummer + monthlyCostSavingsForWinter)/2.0;
@@ -108,14 +107,58 @@ public class CostSavingGraph extends Activity {
         totalSavingsForLED = Double.parseDouble(f.format(totalSavingsForLED));
 
         replacement.setText(""+totalSavingsForExistings);
-        existingCost.setText(""+totalSavingsForLED);
+        existingCost.setText("" + totalSavingsForLED);
+
+        double existingCostForYear = totalSavingsForExistings * 12.0;
+        double replacementsCostForLED = totalSavingsForLED * 12.0;
+
+        StaticLabelsFormatter staticLabelsFormatterForBarGraph = new StaticLabelsFormatter(bargraphView);
+        //staticLabelsFormatterForBarGraph.setHorizontalLabels(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
+        graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatterForBarGraph);
+        BarGraphSeries<DataPoint> series2 = new BarGraphSeries<>(new DataPoint[]{
+                new DataPoint(0, existingCostForYear),
 
 
+        });
 
+        BarGraphSeries<DataPoint> series3 = new BarGraphSeries<>(new DataPoint[]{
+                new DataPoint(0, existingCostForYear),
+                new DataPoint(5, replacementsCostForLED),
+
+
+        });
+
+        series3.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+            @Override
+            public int get(DataPoint data) {
+                if(data.getX() == 0.0){
+                    return Color.rgb(255, 0 ,0);
+                }
+                return Color.rgb(0,0,255);
+            }
+        });
+
+        series2.setColor(Color.RED);
+        series2.setTitle("Existing System");
+
+        series3.setColor(Color.BLUE);
+        series3.setTitle("HORIZON-ILS™");
+
+        bargraphView.getLegendRenderer().setVisible(true);
+        bargraphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        bargraphView.setTitle("Cost Saving Graph For Year");
+        bargraphView.setTitleColor(Color.BLACK);
+        bargraphView.setBackgroundColor(Color.WHITE);
+
+        bargraphView.addSeries(series2);
+        bargraphView.addSeries(series3);
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
+        //staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
         staticLabelsFormatter.setHorizontalLabels(new String[] {"Ja", "Fe", "Ma", "Ap","Ma", "Ju", "Ju", "Au", "Se", "Oc", "No", "De"});
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+        graphView.getGridLabelRenderer().setNumHorizontalLabels(11);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                 new DataPoint(0, monthlyCostSavingsForWinter),
                 new DataPoint(1, monthlyCostSavingsForWinter),
@@ -159,14 +202,13 @@ public class CostSavingGraph extends Activity {
         graphView.setTitleColor(Color.BLACK);
         graphView.setBackgroundColor(Color.WHITE);
 
-        graphView.addSeries(series1);
+
         graphView.addSeries(series);
+        graphView.addSeries(series1);
     }
 
-
     public void writedata(Bitmap bitmap, String filename) {
-        /*
-        String state;
+       /* String state;
         state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
 
@@ -175,6 +217,7 @@ public class CostSavingGraph extends Activity {
             if (!dir.exists()) {
                 dir.mkdir();
             }
+            File file = new File(dir, filename);
             try {
                 FileOutputStream fos = new FileOutputStream(file);
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
@@ -193,8 +236,10 @@ public class CostSavingGraph extends Activity {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
             outputStream.close();
         } catch (Exception e) {
-            e.printStackTrace();
+                e.printStackTrace();
+            }
         }
+
     }
 
-}
+

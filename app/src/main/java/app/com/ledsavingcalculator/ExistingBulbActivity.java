@@ -56,18 +56,18 @@ public class ExistingBulbActivity extends AppCompatActivity {
 
         typeOfLigth = (Spinner)  findViewById(R.id.existingBulbType);
         numberOfFixture = (EditText)  findViewById(R.id.numberOfFixture);
-       //numberOfFixture.setText("280");
+      // numberOfFixture.setText("280");
         numberOfBulbPerFixture = (EditText)  findViewById(R.id.numberOfBulbPerFixture);
-      //numberOfBulbPerFixture.setText("6");
+     // numberOfBulbPerFixture.setText("6");
         selectLifeSpanType = (Spinner)  findViewById(R.id.selectLifeSpanType);
         costOfExistingBulb = (EditText)  findViewById(R.id.costOfExistingBulb);
-     // costOfExistingBulb.setText("3");
+     //costOfExistingBulb.setText("3");
         ExistingBulbWattage = (EditText) findViewById(R.id.ExistingBulbWattage);
-      // ExistingBulbWattage.setText("54");
+     // ExistingBulbWattage.setText("54");
         enteredTypeOfBulb = (EditText) findViewById(R.id.enteredTypeOfBulb);
         enterTypeOfBulbLable = (TextView) findViewById(R.id.enterTypeOfBulbLable);
         lifespanHour = (EditText) findViewById(R.id.lifespanHour);
-      // lifespanHour.setText("25000");
+      //lifespanHour.setText("25000");
         hourUnit =  findViewById(R.id.hourUnit);
         monthUnit =  findViewById(R.id.monthUnit);
         nextBtn =(Button) findViewById(R.id.nextBtn);

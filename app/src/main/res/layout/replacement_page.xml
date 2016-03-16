@@ -7,6 +7,7 @@
     android:background="#091929" >
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/parent"
         android:layout_width="fill_parent"
         android:layout_height="600dp"
         android:orientation="vertical"
@@ -104,16 +105,23 @@
             android:layout_alignEnd="@+id/textView5" />
 
 
-        <EditText
+        <Spinner
             android:id="@+id/replacmentType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:visibility="visible"
-            android:textColor="#FFFFFFFF"
-            android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/textView4"
             android:layout_marginLeft="40dp"
+            android:layout_marginRight="10dp"
+            android:dropDownWidth="wrap_content"
+            android:clickable="true"
+            android:textColor="#ffffff"
+            android:prompt="@string/selectRegion"
+            android:spinnerMode="dialog"
+            android:background="#FFFFFFFF"
+            android:layout_alignParentEnd="true"
+
             android:layout_alignTop="@+id/textView4" />
 
         <TextView

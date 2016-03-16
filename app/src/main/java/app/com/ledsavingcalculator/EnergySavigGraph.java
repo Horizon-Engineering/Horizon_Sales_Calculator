@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -17,14 +16,13 @@ import android.widget.TextView;
 import com.j256.ormlite.dao.Dao;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -33,6 +31,7 @@ import app.com.ledsavingcalculator.database.dao.Results;
 
 public class EnergySavigGraph extends Activity{
     GraphView graphView;
+    GraphView barGraph;
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
@@ -90,6 +89,56 @@ public class EnergySavigGraph extends Activity{
         }
 
         graphView = (GraphView) findViewById(R.id.graph);
+        barGraph = (GraphView) findViewById(R.id.barGraph);
+
+        double energyCostForYear = monthlyEnergyCostForExisting * 12.0;
+        double replacementCostForYear = monthlyEnergyCostReplacement * 12.0;
+
+        StaticLabelsFormatter staticLabelsFormatterForBarGraph = new StaticLabelsFormatter(barGraph);
+        // staticLabelsFormatterForBarGraph.setHorizontalLabels(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
+        graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatterForBarGraph);
+        BarGraphSeries<DataPoint> existingSeries = new BarGraphSeries<>(new DataPoint[]{
+                new DataPoint(0, energyCostForYear),
+
+
+        });
+
+        BarGraphSeries<DataPoint> replacementSeries = new BarGraphSeries<>(new DataPoint[]{
+                new DataPoint(0, energyCostForYear),
+                new DataPoint(5, replacementCostForYear),
+        });
+
+
+        // styling
+        replacementSeries.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+            @Override
+            public int get(DataPoint data) {
+                if (data.getX() == 0.0) {
+                    return Color.rgb(255, 0, 0);
+                }
+                return Color.rgb(0, 0, 255);
+            }
+        });
+
+        replacementPower.setText("" + (int) monthlyEnergyCostForExisting);
+        existingPower.setText("" + (int) monthlyEnergyCostReplacement);
+
+        existingSeries.setColor(Color.RED);
+        existingSeries.setTitle("Existing System");
+
+        replacementSeries.setColor(Color.BLUE);
+        replacementSeries.setTitle("HORIZON-ILS™");
+
+        barGraph.getLegendRenderer().setVisible(true);
+        barGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        barGraph.setTitle("Energy Saving Graph For Year");
+        barGraph.setTitleColor(Color.BLACK);
+        barGraph.setBackgroundColor(Color.WHITE);
+
+        barGraph.addSeries(existingSeries);
+        barGraph.addSeries(replacementSeries);
+
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
         staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
@@ -125,29 +174,29 @@ public class EnergySavigGraph extends Activity{
 
 
         replacementPower.setText(""+ (int) monthlyEnergyCostForExisting);
-        existingPower.setText(""+(int) monthlyEnergyCostReplacement);
+        existingPower.setText("" + (int) monthlyEnergyCostReplacement);
 
         series.setColor(Color.RED);
         series.setTitle("Existing");
 
         series1.setColor(Color.BLUE);
-        series1.setTitle("Replacement");
+        series1.setTitle("HORIZON-ILS™");
 
         graphView.getLegendRenderer().setVisible(true);
         graphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        graphView.getSecondScale().setMinY(0);
+
         graphView.setTitle("Energy Saving Graph");
         graphView.setTitleColor(Color.BLACK);
         graphView.setBackgroundColor(Color.WHITE);
 
-        graphView.addSeries(series1);
         graphView.addSeries(series);
+        graphView.addSeries(series1);
     }
 
 
     public void writedata(Bitmap bitmap, String filename) {
-        /*
-        String state;
+
+       /* String state;
         state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
 
@@ -165,8 +214,9 @@ public class EnergySavigGraph extends Activity{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        */
+        }*/
+
+
         FileOutputStream outputStream;
 
         try {
@@ -176,5 +226,7 @@ public class EnergySavigGraph extends Activity{
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 }
