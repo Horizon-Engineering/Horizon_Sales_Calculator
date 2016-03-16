@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -25,6 +26,7 @@ public class OperationalDays extends Activity{
    List<String> provinceArray;
     private Spinner regions;
     private String selectedRegion;
+    String doneScheduling;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class OperationalDays extends Activity{
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String doneScheduling = bundle.getString("doneScheduling");
+            doneScheduling = bundle.getString("doneScheduling");
         }
 
         final Typeface mFont = Typeface.createFromAsset(getAssets(),
@@ -50,6 +52,16 @@ public class OperationalDays extends Activity{
         Button operationaDays = (Button) findViewById(R.id.operationaDays);
         Button addAnotherType = (Button) findViewById(R.id.addAnotherTypeBtn);
         Button nextBtn = (Button) findViewById(R.id.nextBtn);
+        Button backBtn = (Button) findViewById(R.id.backBtn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startNewActivity = new Intent(getBaseContext(), ReplacementBulbActivity.class);
+                startActivity(startNewActivity);
+            }
+        });
+
         addAnotherType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,8 +97,12 @@ public class OperationalDays extends Activity{
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(doneScheduling.equals("true")){
                 Intent startNewActivity = new Intent(getBaseContext(), CostSavingGraph.class);
-                startActivity(startNewActivity);
+                startActivity(startNewActivity); }
+                else{
+                    Toast.makeText(getBaseContext(),"Please Complete the sceduling part", Toast.LENGTH_SHORT);
+                }
             }
         });
     }

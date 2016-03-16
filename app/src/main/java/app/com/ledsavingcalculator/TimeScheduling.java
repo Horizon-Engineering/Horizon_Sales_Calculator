@@ -86,7 +86,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                         if (day == dayOfTheMonth && (existingStartTime < eventEndTime && existingEndTime > eventStartTime)
                                 && (startAMPM == weekView.getStartTime().get(Calendar.AM_PM))) {
                             shiftOverlap = true;
-                           // Toast.makeText(getBaseContext(), "Time Shifts are overlapping", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(getBaseContext(), "Time Shifts are overlapping", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -159,7 +159,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                     final PerDayData totalHoursPerDay = calculations.getTotalHoursPerDay(events);
 
                     Firebase mRef;
-                    mRef = new Firebase("https://boiling-fire-3227.firebaseio.com/Canada/Ontario/Brampton");
+                    mRef = new Firebase("https://crackling-fire-1725.firebaseio.com/Canada/Ontario/Brampton");
 
                     mRef.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -198,8 +198,8 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             Calculations calculations1 = new Calculations();
 
                             int getNoOfBulbsPerFixture = 0;
-                            int getNoOfFixtures=0;
-                            if(replacementBulbRecord.getTypeOfReplacement().equals("Fixture")){
+                            int getNoOfFixtures = 0;
+                            if (replacementBulbRecord.getTypeOfReplacement().equals("Fixture")) {
                                 getNoOfBulbsPerFixture = 1;
                                 getNoOfFixtures = lastRow.getNoOfFixtures();
                             } else {
@@ -224,20 +224,18 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             double monthlyEnergyCostForExisting = calculations1.getMonthlyCostForExistingBulb(totalHoursPerDay, lastRow, 1, 1, 1) * 100.00;
 
 
-
-
                             //Monthly energy cost for LED Bulb
                             double monthlyEnergyCostForReplacementBulb = calculations1.getMonthlyCostForReplacementBulb(totalHoursPerDay,
-                                    replacementBulbRecord, 1,1,1,getNoOfFixtures, getNoOfBulbsPerFixture) * 100.00;
+                                    replacementBulbRecord, 1, 1, 1, getNoOfFixtures, getNoOfBulbsPerFixture) * 100.00;
 
                             double energySaving = monthlyEnergyCostForExisting - monthlyEnergyCostForReplacementBulb;
 
                             //monthly electricity cost for replacement bulb (LED) for both summer and winter
                             double monthlyCostForReplacementBulbForWinter = calculations1.getMonthlyCostForReplacementBulb(totalHoursPerDay, replacementBulbRecord, onloadWinterPrice,
-                                    peakloadWinterPrice, offloadWinterPrice, getNoOfFixtures , getNoOfBulbsPerFixture);
+                                    peakloadWinterPrice, offloadWinterPrice, getNoOfFixtures, getNoOfBulbsPerFixture);
 
                             double monthlyCostForReplacementBulbForSummer = calculations1.getMonthlyCostForReplacementBulb(totalHoursPerDay, replacementBulbRecord, onloadSummerPrice,
-                                    peakloadSummerCost, offloadsummerCost, getNoOfFixtures , getNoOfBulbsPerFixture);
+                                    peakloadSummerCost, offloadsummerCost, getNoOfFixtures, getNoOfBulbsPerFixture);
 
 
                             double costOfExistingBulbReplacement = calculations1.getCostOfExistingBulbReplacement(lastRow, replacementBulbRecord.getLifeSpan(), replacementBulbRecord.getCostOfReplacementbulb());
@@ -260,7 +258,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             results.setEnergySavingSummer(energySaving);
                             results.setMonthlyCostSavingForSummer(monthlyCostSavingsForSummer);
                             results.setMonthlyCostSavingForWinter(monthlyCostSavingsForWinter);
-                           results.setTotalEnergySaving(totalEnergySaving);
+                            results.setTotalEnergySaving(totalEnergySaving);
                             results.setMonthlyEnergyCostForExisting(monthlyEnergyCostForExisting);
                             results.setMonthlyEnergyCostForReplacementBulb(monthlyEnergyCostForReplacementBulb);
 

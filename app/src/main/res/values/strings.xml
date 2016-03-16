@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="ChooseBulbType">Select Bulb Type</string>
     <string name="selectRegion">Select Region</string>
+    <string name="selectLight">Select Light Type</string>
     <string name="dialog_fire_missiles">are you sure</string>
     <string name="fire">fire</string>
     <string name="cancel">cancel</string>
