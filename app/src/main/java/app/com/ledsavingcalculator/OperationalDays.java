@@ -44,7 +44,7 @@ public class OperationalDays extends Activity{
 
 
         Firebase.setAndroidContext(this);
-        mRef = new Firebase("https://boiling-fire-3227.firebaseio.com/Canada/Ontario");
+        mRef = new Firebase("https://crackling-fire-1725.firebaseio.com/Canada/Ontario");
 
         regions = (Spinner) findViewById(R.id.regions);
         Button operationaDays = (Button) findViewById(R.id.operationaDays);
