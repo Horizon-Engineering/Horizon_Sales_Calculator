@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -43,6 +44,8 @@ public class ReplacementBulbActivity extends Activity {
     Firebase mRef;
     private ArrayList<String> lightArray;
     private String selectedBulbType;
+    TextView enterTypeOfBulbLable;
+    TextView typeOfBulb;
 
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -59,6 +62,8 @@ public class ReplacementBulbActivity extends Activity {
         wattageOfReplacementbulb = (EditText) findViewById(R.id.wattageOfReplacementbulb);
         wattageOfReplacementbulb.setText("100");
         replacmentType = (Spinner) findViewById(R.id.replacmentType);
+        enterTypeOfBulbLable = (TextView) findViewById(R.id.typeOfBulbLabel);
+        typeOfBulb = (TextView) findViewById(R.id.typeOfBulb);
 
         nextBtn = findViewById(R.id.nextBtn);
 
@@ -77,6 +82,7 @@ public class ReplacementBulbActivity extends Activity {
 
         Firebase.setAndroidContext(this);
         mRef = new Firebase("https://crackling-fire-1725.firebaseio.com/Light-type");
+
         mRef.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -126,6 +132,10 @@ public class ReplacementBulbActivity extends Activity {
                     int replacementLifespan = Integer.parseInt(lifeSpan.getText().toString());
                     float costOfReplacementPerBulb = Float.parseFloat(costOfReplacementBulb.getText().toString());
                     //String replacmentType1 = String.valueOf(replacmentType.getText().toString());
+
+                    if(selectedBulbType.equals("Other")){
+                        selectedBulbType = typeOfBulb.getText().toString();
+                    }
 
                     ReplacementBulb replacementBulb = new ReplacementBulb(typeOfReplacementBulb,
                             selectedBulbType, wattageOfBulb, replacementLifespan, costOfReplacementPerBulb);
@@ -204,9 +214,19 @@ public class ReplacementBulbActivity extends Activity {
         replacmentType.setAdapter(dataAdapter);
 
         replacmentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedBulbType = parent.getItemAtPosition(position).toString();
+
+                if (selectedBulbType.equals("Other")) {
+                    typeOfBulb.setVisibility(View.VISIBLE);
+                    enterTypeOfBulbLable.setVisibility(View.VISIBLE);
+                } else {
+                    typeOfBulb.setVisibility(View.INVISIBLE);
+                    enterTypeOfBulbLable.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
