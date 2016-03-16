@@ -215,7 +215,6 @@ public class ReplacementBulbActivity extends Activity {
 
         replacmentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedBulbType = parent.getItemAtPosition(position).toString();
