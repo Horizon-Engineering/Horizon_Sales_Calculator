@@ -545,6 +545,7 @@ public class Calculations {
         long min = sundayTotalHours.getNumberOfHours() + mondayTotalHours.getNumberOfMins() + tuesdayTotalHours.getNumberOfMins()+
                         wednesDayTotalHours.getNumberOfMins() + thursdayTotalHours.getNumberOfMins() + fridayTotalHours.getNumberOfMins() +
                         saturdayTotalHours.getNumberOfMins();
+
         Hours minToHours = recursiveMinCheck(min);
 
         hours = hours + minToHours.getNumberOfHours();

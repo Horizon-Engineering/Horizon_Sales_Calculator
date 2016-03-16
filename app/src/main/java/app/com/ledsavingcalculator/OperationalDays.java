@@ -106,7 +106,6 @@ public class OperationalDays extends Activity{
             }
         });
     }
-
     private void updateRegion() {
 
         MyArrayAdapter dataAdapter = new MyArrayAdapter(getBaseContext(), android.R.layout.simple_list_item_single_choice, provinceArray);

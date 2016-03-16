@@ -134,6 +134,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                 startNewActivityIntent.putExtra("startTime", startTime);
                 startNewActivityIntent.putExtra("startAMPM", startAMPM);
                 startActivity(startNewActivityIntent);
+
             }
         });
 

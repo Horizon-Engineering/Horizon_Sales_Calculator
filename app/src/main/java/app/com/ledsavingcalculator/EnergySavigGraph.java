@@ -48,7 +48,6 @@ public class EnergySavigGraph extends Activity{
         double monthlyEnergyCostReplacement = 0.0;
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getBaseContext());
-
         Button nextBtn = (Button) findViewById(R.id.nextBtn);
         Button backBtn = (Button) findViewById(R.id.backBtn);
         TextView existingPower = (TextView) findViewById(R.id.existingPower);

@@ -59,6 +59,7 @@ public class Results {
 //        this.monthlyElecticityCostForLEDForWinter = monthlyElecticityCostForLEDForWinter;
 //    }
 
+
     public double getIntialLEDCost() {
         return intialLEDCost;
     }
