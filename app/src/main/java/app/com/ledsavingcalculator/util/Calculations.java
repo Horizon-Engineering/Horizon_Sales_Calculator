@@ -522,4 +522,33 @@ public class Calculations {
         costOfExistingBulbReplacement = Float.parseFloat(f.format(costOfExistingBulbReplacement));
         return costOfExistingBulbReplacement;
     }
+
+    public double getWeeklyActiveHour(PerDayData totalHoursPerDay) {
+        Hours sundayTotalHours = addThreeToObj(totalHoursPerDay.sundayData.getOfLoad(), totalHoursPerDay.sundayData.getPeakLoad(),
+                totalHoursPerDay.sundayData.getOnLoad());
+        Hours mondayTotalHours = addThreeToObj(totalHoursPerDay.mondayData.getOfLoad(), totalHoursPerDay.mondayData.getPeakLoad(),
+                totalHoursPerDay.mondayData.getOnLoad());
+        Hours tuesdayTotalHours = addThreeToObj(totalHoursPerDay.tuesdayData.getOfLoad(), totalHoursPerDay.tuesdayData.getPeakLoad(),
+                totalHoursPerDay.tuesdayData.getOnLoad());
+        Hours wednesDayTotalHours = addThreeToObj(totalHoursPerDay.wednesdayData.getOfLoad(), totalHoursPerDay.wednesdayData.getPeakLoad(),
+                totalHoursPerDay.wednesdayData.getOnLoad());
+        Hours thursdayTotalHours = addThreeToObj(totalHoursPerDay.thursdayData.getOfLoad(), totalHoursPerDay.thursdayData.getPeakLoad(),
+                totalHoursPerDay.thursdayData.getOnLoad());
+        Hours fridayTotalHours = addThreeToObj(totalHoursPerDay.fridayData.getOfLoad(), totalHoursPerDay.fridayData.getPeakLoad(),
+                totalHoursPerDay.fridayData.getOnLoad());
+        Hours saturdayTotalHours = addThreeToObj(totalHoursPerDay.saturdayData.getOfLoad(), totalHoursPerDay.saturdayData.getPeakLoad(),
+                totalHoursPerDay.saturdayData.getOnLoad());
+
+        double hours  = sundayTotalHours.getNumberOfHours()+mondayTotalHours.getNumberOfHours()+tuesdayTotalHours.getNumberOfHours()+wednesDayTotalHours.getNumberOfHours()+
+               thursdayTotalHours.getNumberOfHours()+ fridayTotalHours.getNumberOfHours() + saturdayTotalHours.getNumberOfHours();
+
+        long min = sundayTotalHours.getNumberOfHours() + mondayTotalHours.getNumberOfMins() + tuesdayTotalHours.getNumberOfMins()+
+                        wednesDayTotalHours.getNumberOfMins() + thursdayTotalHours.getNumberOfMins() + fridayTotalHours.getNumberOfMins() +
+                        saturdayTotalHours.getNumberOfMins();
+        Hours minToHours = recursiveMinCheck(min);
+
+        hours = hours + minToHours.getNumberOfHours();
+        hours = hours + minToHours.getNumberOfMins()/60.0;
+        return  hours;
+    }
 }

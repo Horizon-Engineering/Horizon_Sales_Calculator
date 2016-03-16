@@ -77,7 +77,6 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                     Intent intent = getIntent();
                     HashMap<Integer, String> hashMap = (HashMap<Integer, String>) intent.getSerializableExtra("map");
 
-
                     for (WeekViewEvent weekView : events) {
                         int day = weekView.getStartTime().get(Calendar.DAY_OF_MONTH);
                         int existingStartTime = weekView.getStartTime().get(Calendar.HOUR_OF_DAY);
@@ -146,7 +145,15 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
             public void onClick(View v) {
                 Intent refresh = new Intent(getBaseContext(), TimeScheduling.class);
                 startActivity(refresh);
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(getBaseContext());
+                try {
+                    Dao<Results, Integer> resultDao = dataBaseHelper.getResultDao();
+                    resultDao.clearObjectCache();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 events.clear();
+
             }
         });
 
@@ -207,11 +214,12 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                                 getNoOfFixtures = lastRow.getNoOfFixtures();
                             }
 
-
                             //Inital LED Installation cost
                             double intialLedCost = calculations1.getIntialLedCost(replacementBulbRecord.getCostOfReplacementbulb(),
                                     0, getNoOfBulbsPerFixture * getNoOfFixtures);
 
+                            //Calculate Total hours perWeek
+                            double weeklyActiveHour = calculations1.getWeeklyActiveHour(totalHoursPerDay);
 
                             //Monthly electricity cost for  existing bulb in both winter and summer
                             double monthlyCostForExistingBulbWinter = calculations1.getMonthlyCostForExistingBulb(totalHoursPerDay, lastRow, onloadWinterPrice,
@@ -237,9 +245,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             double monthlyCostForReplacementBulbForSummer = calculations1.getMonthlyCostForReplacementBulb(totalHoursPerDay, replacementBulbRecord, onloadSummerPrice,
                                     peakloadSummerCost, offloadsummerCost, getNoOfFixtures, getNoOfBulbsPerFixture);
 
-
                             double costOfExistingBulbReplacement = calculations1.getCostOfExistingBulbReplacement(lastRow, replacementBulbRecord.getLifeSpan(), replacementBulbRecord.getCostOfReplacementbulb());
-
 
                             double monthlyCostSavingsForSummer = monthlyCostForExistingBulbSummer - monthlyCostForReplacementBulbForSummer;
                             double monthlyCostSavingsForWinter = monthlyCostForExistingBulbWinter - monthlyCostForReplacementBulbForWinter;
@@ -249,6 +255,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             Results results = new Results();
 
                             results.setIntialLEDCost(intialLedCost);
+                            results.setWeeklyActiveHour(weeklyActiveHour);
                             results.setMonthlyCostForExistingBulbsForWinter(monthlyCostForExistingBulbWinter);
                             results.setMonthlyElectricityOfExistingBulbForSummer(monthlyCostForExistingBulbSummer);
                             results.setMonthlyElecticityCostForLEDForSummer(monthlyCostForReplacementBulbForSummer);
@@ -263,7 +270,6 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             results.setMonthlyEnergyCostForReplacementBulb(monthlyEnergyCostForReplacementBulb);
 
                             // System.out.println("====>>> result "+results.getId());
-
                             try {
                                 Dao<Results, Integer> resultDao = dataBaseHelper.getResultDao();
                                 resultDao.create(results);
@@ -273,18 +279,22 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
-
-                            events.clear();
+                           if(!events.isEmpty()){
+                            Intent startNewActivity = new Intent(getBaseContext(), OperationalDays.class);
+                            startNewActivity.putExtra("doneScheduling", doneScheduling);
+                            startActivity(startNewActivity);
+                           }
+                            else
+                           {
+                               Toast.makeText(TimeScheduling.this, "Please select the time", Toast.LENGTH_SHORT).show();
+                           }
                         }
-
                         @Override
                         public void onCancelled(FirebaseError firebaseError) {
                         }
 
                     });
-                    Intent startNewActivity = new Intent(getBaseContext(), OperationalDays.class);
-                    startNewActivity.putExtra("doneScheduling", doneScheduling);
-                    startActivity(startNewActivity);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

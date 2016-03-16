@@ -32,6 +32,8 @@ public class Results {
     private double monthlyEnergyCostForExisting;
     @DatabaseField
     private double monthlyEnergyCostForReplacementBulb;
+    @DatabaseField
+    private double weeklyActiveHour;
 
    //empty constructor required for creating the Dao obj
     public Results(){}
@@ -237,5 +239,13 @@ public class Results {
                 ", monthlyEnergyCostForExisting=" + monthlyEnergyCostForExisting +
                 ", monthlyEnergyCostForReplacementBulb=" + monthlyEnergyCostForReplacementBulb +
                 '}';
+    }
+
+    public double getWeeklyActiveHour() {
+        return weeklyActiveHour;
+    }
+
+    public void setWeeklyActiveHour(double weeklyActiveHour) {
+        this.weeklyActiveHour = weeklyActiveHour;
     }
 }

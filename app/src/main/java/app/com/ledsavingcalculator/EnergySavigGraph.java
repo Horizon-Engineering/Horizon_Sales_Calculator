@@ -91,8 +91,8 @@ public class EnergySavigGraph extends Activity{
         graphView = (GraphView) findViewById(R.id.graph);
         barGraph = (GraphView) findViewById(R.id.barGraph);
 
-        double energyCostForYear = monthlyEnergyCostForExisting * 12.0;
-        double replacementCostForYear = monthlyEnergyCostReplacement * 12.0;
+        double energyCostForYear = monthlyEnergyCostForExisting;
+        double replacementCostForYear = monthlyEnergyCostReplacement;
 
         StaticLabelsFormatter staticLabelsFormatterForBarGraph = new StaticLabelsFormatter(barGraph);
         // staticLabelsFormatterForBarGraph.setHorizontalLabels(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
@@ -107,7 +107,6 @@ public class EnergySavigGraph extends Activity{
                 new DataPoint(0, energyCostForYear),
                 new DataPoint(5, replacementCostForYear),
         });
-
 
         // styling
         replacementSeries.setValueDependentColor(new ValueDependentColor<DataPoint>() {
@@ -132,7 +131,7 @@ public class EnergySavigGraph extends Activity{
         barGraph.getLegendRenderer().setVisible(true);
         barGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
-        barGraph.setTitle("Energy Saving Graph For Year");
+        barGraph.setTitle("Energy Saving Graph For Month");
         barGraph.setTitleColor(Color.BLACK);
         barGraph.setBackgroundColor(Color.WHITE);
 
@@ -172,12 +171,11 @@ public class EnergySavigGraph extends Activity{
                 new DataPoint(11,monthlyEnergyCostReplacement)
         });
 
-
         replacementPower.setText(""+ (int) monthlyEnergyCostForExisting);
         existingPower.setText("" + (int) monthlyEnergyCostReplacement);
 
         series.setColor(Color.RED);
-        series.setTitle("Existing");
+        series.setTitle("Existing System");
 
         series1.setColor(Color.BLUE);
         series1.setTitle("HORIZON-ILS™");
@@ -216,7 +214,6 @@ public class EnergySavigGraph extends Activity{
             }
         }*/
 
-
         FileOutputStream outputStream;
 
         try {
@@ -226,7 +223,5 @@ public class EnergySavigGraph extends Activity{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 }
