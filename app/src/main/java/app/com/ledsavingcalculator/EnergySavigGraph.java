@@ -17,6 +17,7 @@ import com.j256.ormlite.dao.Dao;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
@@ -69,8 +70,8 @@ public class EnergySavigGraph extends Activity{
                 View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
                 View screenView = rootView.getRootView();
                 screenView.setDrawingCacheEnabled(true);
-                Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 0, graphView.getWidth()-50, graphView.getHeight());
-                Bitmap bitmap1 = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 1550, graphView.getWidth()-50, graphView.getHeight());
+                Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache(),(int)graphView.getX(), (int)graphView.getY(), graphView.getWidth(), graphView.getHeight());
+                Bitmap bitmap1 = Bitmap.createBitmap(screenView.getDrawingCache(), (int)barGraph.getX(), (int)barGraph.getY(), barGraph.getWidth(), barGraph.getHeight());
                 writedata(bitmap1, "saveyearly.png");
                 writedata(bitmap, "save.png");
             }
@@ -131,16 +132,14 @@ public class EnergySavigGraph extends Activity{
 
         barGraph.getLegendRenderer().setVisible(true);
         barGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        barGraph.getSecondScale().setMinY(0);
         barGraph.setTitle("Energy Consumption - Month (kWh)");
         barGraph.setTitleColor(Color.BLACK);
         barGraph.setBackgroundColor(Color.WHITE);
-
+        barGraph.getViewport().setMinY(0);
         barGraph.addSeries(existingSeries);
         barGraph.addSeries(replacementSeries);
-
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
-        staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
+        staticLabelsFormatter.setHorizontalLabels(new String[] {"Ja", "Fe", "Ma", "Ap","Ma", "Ju", "Ju", "Au", "Se", "Oc", "No", "De"});
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                 new DataPoint(0, monthlyEnergyCostForExisting),
@@ -172,7 +171,7 @@ public class EnergySavigGraph extends Activity{
                 new DataPoint(11,monthlyEnergyCostReplacement)
         });
 
-        replacementPower.setText(""+ (int) monthlyEnergyCostForExisting);
+        replacementPower.setText("" + (int) monthlyEnergyCostForExisting);
         existingPower.setText("" + (int) monthlyEnergyCostReplacement);
 
         series.setColor(Color.RED);
@@ -183,11 +182,10 @@ public class EnergySavigGraph extends Activity{
 
         graphView.getLegendRenderer().setVisible(true);
         graphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        graphView.getSecondScale().setMinY(0);
         graphView.setTitle("Energy Saving Graph");
         graphView.setTitleColor(Color.BLACK);
         graphView.setBackgroundColor(Color.WHITE);
-
+        graphView.getViewport().setMinY(0);
         graphView.addSeries(series);
         graphView.addSeries(series1);
     }

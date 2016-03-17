@@ -56,11 +56,11 @@ public class ReplacementBulbActivity extends Activity {
 
         backBtnId = findViewById(R.id.backBtn);
         lifeSpan = (EditText) findViewById(R.id.replacementLifeSpan);
-        lifeSpan.setText("50000");
+        //lifeSpan.setText("50000");
         costOfReplacementBulb = (EditText) findViewById(R.id.costOfReplacement);
-        costOfReplacementBulb.setText("6");
+        //costOfReplacementBulb.setText("6");
         wattageOfReplacementbulb = (EditText) findViewById(R.id.wattageOfReplacementbulb);
-        wattageOfReplacementbulb.setText("100");
+        //wattageOfReplacementbulb.setText("100");
         replacmentType = (Spinner) findViewById(R.id.replacmentType);
         enterTypeOfBulbLable = (TextView) findViewById(R.id.typeOfBulbLabel);
         typeOfBulb = (TextView) findViewById(R.id.typeOfBulb);

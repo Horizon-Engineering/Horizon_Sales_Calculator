@@ -1,15 +1,21 @@
 package app.com.ledsavingcalculator;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,18 +30,17 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.j256.ormlite.dao.Dao;
-
-import org.h2.util.IOUtils;
+import com.j256.ormlite.table.TableUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -46,17 +51,15 @@ import app.com.ledsavingcalculator.database.DataBaseHelper;
 import app.com.ledsavingcalculator.database.dao.ExistingBulb;
 import app.com.ledsavingcalculator.database.dao.ReplacementBulb;
 import app.com.ledsavingcalculator.database.dao.Results;
+import app.com.ledsavingcalculator.util.Calculations;
 import app.com.ledsavingcalculator.util.Mail;
-import app.com.ledsavingcalculator.util.PerDayData;
-import com.itextpdf.text.Rectangle;
-
 import javax.xml.transform.Result;
 
 
 public class SendEmail extends Activity {
 
     EditText emailadd, contactname, companyname, facilitysize, designation, address;
-    Button nextBtn;
+    Button nextBtn, backBtn;
     String email,Contactname, Companyname, fsize, Designation, Address;
     private  static BaseColor HorizonColor = new BaseColor(34, 78, 48);
     private  static BaseColor HorizonRedColor = new BaseColor(192, 0, 0);
@@ -74,6 +77,7 @@ public class SendEmail extends Activity {
             Font.NORMAL, BaseColor.WHITE);
     private static Font smallNormalHorizon = new Font(Font.FontFamily.TIMES_ROMAN, 12,
             Font.NORMAL, HorizonColor);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -86,6 +90,15 @@ public class SendEmail extends Activity {
         designation = (EditText)findViewById(R.id.designation);
         address = (EditText)findViewById(R.id.address);
         nextBtn = (Button)findViewById(R.id.nextBtn);
+        backBtn = (Button)findViewById(R.id.backBtn);
+        setupUI(findViewById(R.id.parent));
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +151,7 @@ public class SendEmail extends Activity {
                     String to = emailadd.getText().toString();
                     String to1 = "contact@hesolutions.ca";
                     String subject = "Project Proposal-ILS";
-                    String message = "Hello,\n Thank you for considering Horizon Engineering Solutions. Please find the complete project " +
+                    String message = "Hello,\nThank you for considering Horizon Engineering Solutions. Please find the complete project " +
                             "proposal attached to this email. \n" + "\n" + "\n" + "\n"+ "Regards, \n" + "Hariharan Krithivasan \n"
                             + "Chief Executive Officer \n" + "Horizon Engineering Solutions \n" + "Email:hari@hesolutions.ca \n"+
                             "Mobile:(+1)226-792-1506 \n" + "Work:(+1)519-749-3373\n" + "Website: www.hesolutions.ca\n";
@@ -174,17 +187,11 @@ public class SendEmail extends Activity {
                             e.printStackTrace();
                         }
                     }
+
                     new AsyncTask<Void, Void, Void>() {
 
                         @Override
                         protected void onPreExecute() {
-                            emailadd.setText("");
-                            contactname.setText("");
-                            companyname.setText("");
-                            facilitysize.setText("");
-                            designation.setText("");
-                            address.setText("");
-                            Toast.makeText(SendEmail.this, "Send successfully", Toast.LENGTH_SHORT).show();
                         }
                         @Override
                         protected Void doInBackground(Void... params)
@@ -198,7 +205,27 @@ public class SendEmail extends Activity {
                             return null;
                         }
                         @Override
-                        protected void onPostExecute(Void res) {}
+                        protected void onPostExecute(Void res) {
+                            emailadd.setText("");
+                            contactname.setText("");
+                            companyname.setText("");
+                            facilitysize.setText("");
+                            designation.setText("");
+                            address.setText("");
+                            final AlertDialog.Builder alertDialog = new AlertDialog.Builder(SendEmail.this);
+                            alertDialog.setTitle("Email sent successfully");
+                            alertDialog.setCancelable(false);
+                            alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                    Intent intent = new Intent(SendEmail.this, MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                }
+                            });
+
+                            alertDialog.show();
+                        }
                     }.execute();
                 }else
                 {
@@ -284,30 +311,44 @@ public class SendEmail extends Activity {
         document.newPage();
     }
     private void addContent(Document document) throws DocumentException {
+
+        try {
+            Drawable d = getResources().getDrawable(R.drawable.smalllogo);
+            BitmapDrawable bitDw = ((BitmapDrawable) d);
+            Bitmap bmp = bitDw.getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Image image = Image.getInstance(stream.toByteArray());
+            image.scaleAbsolute(150f, 35f);
+            image.setAlignment(Element.ALIGN_RIGHT);
+            document.add(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Paragraph preface = new Paragraph();
         // Second parameter is the number of the chapter
         preface.add(new Paragraph("Section 1: Existing Lighting system analysis", subFontUnderline));
         preface.setAlignment(Element.ALIGN_LEFT);
         addEmptyLine(preface, 3);
         document.add(preface);
-
-
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getBaseContext());
 
         Dao<ExistingBulb, Integer> existingBulbDao = null;
-        Dao<Results, Integer> resultses = null;
         try {
             existingBulbDao = dataBaseHelper.getExistingBulbDao();
+            Dao<Results, Integer> resultDao = dataBaseHelper.getResultDao();
+            List<Results> resultses = resultDao.queryForAll();
             List<ExistingBulb> existingBulbs = existingBulbDao.queryForAll();
-            List<Results> results = resultses.queryForAll();
             int number = 0;
             for (ExistingBulb existingBulb : existingBulbs) {
-                Results results1 = results.get(number);
+                Results results1 = resultses.get(number);
                 double totalWeeklyHour = results1.getWeeklyActiveHour();
                 number++;
                 Paragraph preface1 = new Paragraph();
                 preface1.add(new Paragraph("Light " +number, smallBoldHorizon));
                 addEmptyLine(preface1, 1);
+
 
                 String typeoflight = existingBulb.getTypeOfLight();
                 int wattageperbulb = existingBulb.getWattageOfBulb();
@@ -315,7 +356,7 @@ public class SendEmail extends Activity {
                 int bulbperfixture = existingBulb.getNoOfBulbsPerFixture();
                 int totalbulb = numberoffixture*bulbperfixture;
                 int totalwattage = totalbulb * wattageperbulb;
-
+                DecimalFormat f = new DecimalFormat("##.00");
                 PdfPTable table = new PdfPTable(2);
                 table.setTotalWidth(document.getPageSize().getWidth() - 80);
                 table.setLockedWidth(true);
@@ -365,7 +406,7 @@ public class SendEmail extends Activity {
                 cell = new PdfPCell(new Phrase("Operational Hours", smallBold));
                 cell.setBorder(PdfPCell.NO_BORDER);
                 table.addCell(cell);
-                cell = new PdfPCell(new Phrase(Double.toString(totalWeeklyHour), smallNormal));
+                cell = new PdfPCell(new Phrase((f.format(totalWeeklyHour)), smallNormal));
                 cell.setBorder(PdfPCell.NO_BORDER);
                 table.addCell(cell);
                 document.add(preface1);
@@ -374,17 +415,19 @@ public class SendEmail extends Activity {
         } catch (SQLException e) {
         e.printStackTrace();
         }
-
+        /*
         PdfPTable table = new PdfPTable(2);
         table.setTotalWidth(document.getPageSize().getWidth() - 80);
         table.setLockedWidth(true);
         PdfPCell cell;
-        cell = new PdfPCell(new Phrase("Average Monthly Cost on lighting system (Hydro Cost)", smallBold));
+        cell = new PdfPCell(new Phrase("Average Monthly Cost on lighting system (Hydro Cost)", smallBoldHorizon));
         cell.setBorder(PdfPCell.NO_BORDER);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase(fsize + "sq.ft", smallNormal));
+        cell = new PdfPCell(new Phrase("$" + fsize + "(CAD)", smallBoldHorizon));
         cell.setBorder(PdfPCell.NO_BORDER);
         table.addCell(cell);
+        */
+
         // Start a new page
         document.newPage();
     }
@@ -396,6 +439,19 @@ public class SendEmail extends Activity {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getBaseContext());
         String typenew = "";
 
+        try {
+            Drawable d = getResources().getDrawable(R.drawable.smalllogo);
+            BitmapDrawable bitDw = ((BitmapDrawable) d);
+            Bitmap bmp = bitDw.getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Image image = Image.getInstance(stream.toByteArray());
+            image.scaleAbsolute(150f, 35f);
+            image.setAlignment(Element.ALIGN_RIGHT);
+            document.add(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         preface.add(new Paragraph("Section 2: HORIZON-ILS™ ", subFontUnderline));
         preface.setAlignment(Element.ALIGN_LEFT);
         document.add(preface);
@@ -511,7 +567,7 @@ public class SendEmail extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Paragraph horizonaxis = new Paragraph("Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec", smallNormal);
+        Paragraph horizonaxis = new Paragraph("Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec", smallNormal);
         horizonaxis.setAlignment(Element.ALIGN_CENTER);
         document.add(horizonaxis);
         // Start a new page
@@ -523,6 +579,19 @@ public class SendEmail extends Activity {
         // Second parameter is the number of the chapter
 
         try {
+            Drawable d = getResources().getDrawable(R.drawable.smalllogo);
+            BitmapDrawable bitDw = ((BitmapDrawable) d);
+            Bitmap bmp = bitDw.getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Image image = Image.getInstance(stream.toByteArray());
+            image.scaleAbsolute(150f, 35f);
+            image.setAlignment(Element.ALIGN_RIGHT);
+            document.add(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
             /// Image image2 = Image.getInstance(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PdfTest/save.png");
             String yourFilePath = getFilesDir() + "/" + "costyearly.png";
             Image image2 = Image.getInstance(yourFilePath);
@@ -532,6 +601,7 @@ public class SendEmail extends Activity {
             Image image1 = Image.getInstance(yourFilePath1);
             image1.scaleAbsolute(400f, 200f);
             image1.setAlignment(Element.ALIGN_CENTER);
+            document.add(emptypreface);
             document.add(image2);
             document.add(emptypreface);
             document.add(image1);
@@ -558,6 +628,28 @@ public class SendEmail extends Activity {
     private static void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));
+        }
+    }
+
+    public void setupUI(View view) {
+        //Set up touch listener for non-text box views to hide keyboard.
+        if(!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+
+                public boolean onTouch(View v, MotionEvent event) {
+                    Calculations.hideSoftKeyboard(SendEmail.this);
+                    return false;
+                }
+
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
         }
     }
 

@@ -18,5 +18,6 @@ public class MainActivity extends AppCompatActivity {
         dataBaseHelper.createTables();
         Intent existingBulb = new Intent(this, ExistingBulbActivity.class);
         startActivity(existingBulb);
+
     }
 }

@@ -17,6 +17,7 @@ import com.j256.ormlite.dao.Dao;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
@@ -71,8 +72,9 @@ public class CostSavingGraph extends Activity {
                 View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
                 View screenView = rootView.getRootView();
                 screenView.setDrawingCacheEnabled(true);
-                Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 0, graphView.getWidth()-50, graphView.getHeight());
-                Bitmap bitmap1 = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 1550, graphView.getWidth()-50, graphView.getHeight());
+                Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache(), (int)graphView.getX(), (int)graphView.getY(), graphView.getWidth(), graphView.getHeight());
+
+                Bitmap bitmap1 = Bitmap.createBitmap(screenView.getDrawingCache(), (int)bargraphView.getX(), (int)bargraphView.getY(), bargraphView.getWidth(), bargraphView.getHeight());
                 writedata(bitmap1, "costyearly.png");
                 writedata(bitmap, "cost.png");
             }
@@ -88,7 +90,6 @@ public class CostSavingGraph extends Activity {
 
                 mothlyCostForLEDForSummer += results.getMonthlyElecticityCostForLEDForSummer();
                 mothlyCostForLEDForWinter += results.getMonthlyElecticityCostForLEDForWinter();
-
             }
 
         } catch (SQLException e) {
@@ -126,8 +127,6 @@ public class CostSavingGraph extends Activity {
         BarGraphSeries<DataPoint> series3 = new BarGraphSeries<>(new DataPoint[]{
                 new DataPoint(0, existingCostForYear),
                 new DataPoint(5, replacementsCostForLED),
-
-
         });
 
         series3.setValueDependentColor(new ValueDependentColor<DataPoint>() {
@@ -136,7 +135,7 @@ public class CostSavingGraph extends Activity {
                 if(data.getX() == 0.0){
                     return Color.rgb(255, 0 ,0);
                 }
-                return Color.rgb(0,0,255);
+                return Color.rgb(34, 78, 48);
             }
         });
 
@@ -148,11 +147,10 @@ public class CostSavingGraph extends Activity {
 
         bargraphView.getLegendRenderer().setVisible(true);
         bargraphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        bargraphView.getSecondScale().setMinY(0);
         bargraphView.setTitle("Lighting System Expense Yearly");
         bargraphView.setTitleColor(Color.BLACK);
         bargraphView.setBackgroundColor(Color.WHITE);
-
+        bargraphView.getViewport().setMinY(0);
         bargraphView.addSeries(series2);
         bargraphView.addSeries(series3);
 
@@ -189,23 +187,23 @@ public class CostSavingGraph extends Activity {
                 new DataPoint(10,mothlyCostForLEDForWinter),
                 new DataPoint(11,mothlyCostForLEDForWinter)
         });
-
         series.setColor(Color.RED);
         series.setTitle("Existing System");
 
         series1.setColor(getResources().getColor(R.color.Horizoncolor));
         series1.setTitle("HORIZON-ILS™");
-        graphView.getSecondScale().setMinY(0);
         graphView.getLegendRenderer().setVisible(true);
         graphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
         graphView.setTitle("Energy Expense for Lighting System");
         graphView.setTitleColor(Color.BLACK);
         graphView.setBackgroundColor(Color.WHITE);
-
-
+        graphView.getViewport().setMinY(0);
         graphView.addSeries(series);
         graphView.addSeries(series1);
+
+        // viewport.setMinY(2);
+        //viewport.setScrollable(true);
     }
 
     public void writedata(Bitmap bitmap, String filename) {

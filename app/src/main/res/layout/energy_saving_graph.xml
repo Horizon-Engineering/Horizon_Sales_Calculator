@@ -64,7 +64,7 @@
         android:id="@+id/replacementPower"
         android:text="replacement"
         android:layout_below="@+id/existingPower"
-        android:layout_alignStart="@+id/existingPower" />
+        android:layout_toStartOf="@+id/textView27"  />
 
     <TextView
         android:layout_width="wrap_content"
