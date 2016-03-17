@@ -17,6 +17,7 @@ import com.j256.ormlite.dao.Dao;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
@@ -86,7 +87,6 @@ public class CostSavingGraph extends Activity {
 
                 mothlyCostForLEDForSummer += results.getMonthlyElecticityCostForLEDForSummer();
                 mothlyCostForLEDForWinter += results.getMonthlyElecticityCostForLEDForWinter();
-
             }
 
         } catch (SQLException e) {
@@ -124,8 +124,6 @@ public class CostSavingGraph extends Activity {
         BarGraphSeries<DataPoint> series3 = new BarGraphSeries<>(new DataPoint[]{
                 new DataPoint(0, existingCostForYear),
                 new DataPoint(5, replacementsCostForLED),
-
-
         });
 
         series3.setValueDependentColor(new ValueDependentColor<DataPoint>() {
@@ -158,7 +156,7 @@ public class CostSavingGraph extends Activity {
         //staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
         staticLabelsFormatter.setHorizontalLabels(new String[] {"Ja", "Fe", "Ma", "Ap","Ma", "Ju", "Ju", "Au", "Se", "Oc", "No", "De"});
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-        graphView.getGridLabelRenderer().setNumHorizontalLabels(11);
+       // graphView.getGridLabelRenderer().setNumHorizontalLabels(11);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                 new DataPoint(0, monthlyCostSavingsForWinter),
                 new DataPoint(1, monthlyCostSavingsForWinter),
@@ -205,6 +203,13 @@ public class CostSavingGraph extends Activity {
 
         graphView.addSeries(series);
         graphView.addSeries(series1);
+
+        Viewport viewport = graphView.getViewport();
+        viewport.setYAxisBoundsManual(true);
+        viewport.setXAxisBoundsManual(false);
+       // viewport.setMinY(0);
+        // viewport.setMinY(2);
+        //viewport.setScrollable(true);
     }
 
     public void writedata(Bitmap bitmap, String filename) {

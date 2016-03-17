@@ -1,13 +1,11 @@
 package app.com.ledsavingcalculator;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,11 +24,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.j256.ormlite.dao.Dao;
 
-import org.h2.util.IOUtils;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -42,7 +37,6 @@ import app.com.ledsavingcalculator.database.dao.ExistingBulb;
 import app.com.ledsavingcalculator.database.dao.ReplacementBulb;
 import app.com.ledsavingcalculator.database.dao.Results;
 import app.com.ledsavingcalculator.util.Mail;
-import app.com.ledsavingcalculator.util.PerDayData;
 
 
 public class SendEmail extends AppCompatActivity {
@@ -68,6 +62,8 @@ public class SendEmail extends AppCompatActivity {
             Font.NORMAL, BaseColor.WHITE);
     private static Font smallNormalHorizon = new Font(Font.FontFamily.TIMES_ROMAN, 12,
             Font.NORMAL, HorizonColor);
+    private double totalWeeklyHour;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -276,8 +272,17 @@ public class SendEmail extends AppCompatActivity {
         addEmptyLine(preface, 3);
         document.add(preface);
 
-
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getBaseContext());
+
+        try {
+            Dao<Results, Integer> resultDao = dataBaseHelper.getResultDao();
+            List<Results> resultses = resultDao.queryForAll();
+            for(Results results : resultses){
+                totalWeeklyHour = results.getWeeklyActiveHour();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         Dao<ExistingBulb, Integer> existingBulbDao = null;
         try {
@@ -346,7 +351,7 @@ public class SendEmail extends AppCompatActivity {
                 cell = new PdfPCell(new Phrase("Operational Hours", smallBold));
                 cell.setBorder(PdfPCell.NO_BORDER);
                 table.addCell(cell);
-                cell = new PdfPCell(new Phrase("Operational time", smallNormal));
+                cell = new PdfPCell(new Phrase(Double.toString(totalWeeklyHour), smallNormal));
                 cell.setBorder(PdfPCell.NO_BORDER);
                 table.addCell(cell);
                 document.add(preface1);
