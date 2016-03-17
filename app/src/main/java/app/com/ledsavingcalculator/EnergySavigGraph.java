@@ -69,7 +69,9 @@ public class EnergySavigGraph extends Activity{
                 View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
                 View screenView = rootView.getRootView();
                 screenView.setDrawingCacheEnabled(true);
-                Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 0, graphView.getWidth(), graphView.getHeight());
+                Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 0, graphView.getWidth()-50, graphView.getHeight());
+                Bitmap bitmap1 = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 1550, graphView.getWidth()-50, graphView.getHeight());
+                writedata(bitmap1, "saveyearly.png");
                 writedata(bitmap, "save.png");
             }
         });
@@ -114,7 +116,7 @@ public class EnergySavigGraph extends Activity{
                 if (data.getX() == 0.0) {
                     return Color.rgb(255, 0, 0);
                 }
-                return Color.rgb(0, 0, 255);
+                return Color.rgb(34, 78, 48);
             }
         });
 
@@ -124,13 +126,13 @@ public class EnergySavigGraph extends Activity{
         existingSeries.setColor(Color.RED);
         existingSeries.setTitle("Existing System");
 
-        replacementSeries.setColor(Color.BLUE);
+        replacementSeries.setColor(getResources().getColor(R.color.Horizoncolor));
         replacementSeries.setTitle("HORIZON-ILS™");
 
         barGraph.getLegendRenderer().setVisible(true);
         barGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-
-        barGraph.setTitle("Energy Saving Graph For Month");
+        barGraph.getSecondScale().setMinY(0);
+        barGraph.setTitle("Energy Consumption - Month (kWh)");
         barGraph.setTitleColor(Color.BLACK);
         barGraph.setBackgroundColor(Color.WHITE);
 
@@ -176,12 +178,12 @@ public class EnergySavigGraph extends Activity{
         series.setColor(Color.RED);
         series.setTitle("Existing System");
 
-        series1.setColor(Color.BLUE);
+        series1.setColor(getResources().getColor(R.color.Horizoncolor));
         series1.setTitle("HORIZON-ILS™");
 
         graphView.getLegendRenderer().setVisible(true);
         graphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-
+        graphView.getSecondScale().setMinY(0);
         graphView.setTitle("Energy Saving Graph");
         graphView.setTitleColor(Color.BLACK);
         graphView.setBackgroundColor(Color.WHITE);

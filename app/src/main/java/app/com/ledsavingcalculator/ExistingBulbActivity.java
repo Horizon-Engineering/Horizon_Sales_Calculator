@@ -1,5 +1,6 @@
 package app.com.ledsavingcalculator;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import app.com.ledsavingcalculator.database.DataBaseHelper;
 import app.com.ledsavingcalculator.database.dao.ExistingBulb;
 import app.com.ledsavingcalculator.util.Calculations;
 
-public class ExistingBulbActivity extends AppCompatActivity {
+public class ExistingBulbActivity extends Activity {
 
     private Spinner typeOfLigth;
     private EditText numberOfFixture;

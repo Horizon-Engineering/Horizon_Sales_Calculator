@@ -1,5 +1,6 @@
 package app.com.ledsavingcalculator;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,6 +10,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,10 +21,13 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.j256.ormlite.dao.Dao;
 
@@ -43,17 +48,18 @@ import app.com.ledsavingcalculator.database.dao.ReplacementBulb;
 import app.com.ledsavingcalculator.database.dao.Results;
 import app.com.ledsavingcalculator.util.Mail;
 import app.com.ledsavingcalculator.util.PerDayData;
+import com.itextpdf.text.Rectangle;
+
+import javax.xml.transform.Result;
 
 
-public class SendEmail extends AppCompatActivity {
+public class SendEmail extends Activity {
 
     EditText emailadd, contactname, companyname, facilitysize, designation, address;
     Button nextBtn;
     String email,Contactname, Companyname, fsize, Designation, Address;
     private  static BaseColor HorizonColor = new BaseColor(34, 78, 48);
     private  static BaseColor HorizonRedColor = new BaseColor(192, 0, 0);
-    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
-            Font.BOLD, HorizonColor);
     private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
             Font.BOLD, HorizonColor);
     private static Font subFontUnderline = new Font(Font.FontFamily.TIMES_ROMAN, 16,
@@ -70,6 +76,7 @@ public class SendEmail extends AppCompatActivity {
             Font.NORMAL, HorizonColor);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_email);
         emailadd = (EditText)findViewById(R.id.emailadd);
@@ -112,11 +119,15 @@ public class SendEmail extends AppCompatActivity {
                     FileOutputStream outputStream;
                     try {
                         Document document = new Document();
-                        PdfWriter.getInstance(document, openFileOutput("Test.pdf", MODE_PRIVATE));
+                        Borders event = new Borders();
+                        document.setPageSize(PageSize.A4);
+                        PdfWriter writer = PdfWriter.getInstance(document, openFileOutput("project-proposal-ILS.pdf", MODE_PRIVATE));
+                        writer.setPageEvent(event);
                         document.open();
                         addTitlePage(document);
                         addContent(document);
                         addContentSecond(document);
+                        addContentThird(document);
                         document.close();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -126,10 +137,13 @@ public class SendEmail extends AppCompatActivity {
                     final Mail mail1 = new Mail(from, "Hesolutions123");
                     String to = emailadd.getText().toString();
                     String to1 = "contact@hesolutions.ca";
-                    String subject = "Test Send";
-                    String message = "Just the attachment";
+                    String subject = "Project Proposal-ILS";
+                    String message = "Hello,\n Thank you for considering Horizon Engineering Solutions. Please find the complete project " +
+                            "proposal attached to this email. \n" + "\n" + "\n" + "\n"+ "Regards, \n" + "Hariharan Krithivasan \n"
+                            + "Chief Executive Officer \n" + "Horizon Engineering Solutions \n" + "Email:hari@hesolutions.ca \n"+
+                            "Mobile:(+1)226-792-1506 \n" + "Work:(+1)519-749-3373\n" + "Website: www.hesolutions.ca\n";
                     //String attachements = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PdfTest/Test.pdf";
-                    File attachementsfile = new File(getFilesDir(),"Test.pdf");
+                    File attachementsfile = new File(getFilesDir(),"project-proposal-ILS.pdf");
                     String attachements = attachementsfile.toString();
                     if (subject != null && subject.length() > 0) {
                         mail.setSubject(subject);
@@ -205,7 +219,8 @@ public class SendEmail extends AppCompatActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
             Image image = Image.getInstance(stream.toByteArray());
-            image.scalePercent(18f);
+            image.scaleAbsolute(550f, 100f);
+            image.setAlignment(Element.ALIGN_CENTER);
             document.add(emptypreface);
             document.add(image);
             document.add(emptypreface);
@@ -280,11 +295,15 @@ public class SendEmail extends AppCompatActivity {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getBaseContext());
 
         Dao<ExistingBulb, Integer> existingBulbDao = null;
+        Dao<Results, Integer> resultses = null;
         try {
             existingBulbDao = dataBaseHelper.getExistingBulbDao();
             List<ExistingBulb> existingBulbs = existingBulbDao.queryForAll();
+            List<Results> results = resultses.queryForAll();
             int number = 0;
             for (ExistingBulb existingBulb : existingBulbs) {
+                Results results1 = results.get(number);
+                double totalWeeklyHour = results1.getWeeklyActiveHour();
                 number++;
                 Paragraph preface1 = new Paragraph();
                 preface1.add(new Paragraph("Light " +number, smallBoldHorizon));
@@ -346,7 +365,7 @@ public class SendEmail extends AppCompatActivity {
                 cell = new PdfPCell(new Phrase("Operational Hours", smallBold));
                 cell.setBorder(PdfPCell.NO_BORDER);
                 table.addCell(cell);
-                cell = new PdfPCell(new Phrase("Operational time", smallNormal));
+                cell = new PdfPCell(new Phrase(Double.toString(totalWeeklyHour), smallNormal));
                 cell.setBorder(PdfPCell.NO_BORDER);
                 table.addCell(cell);
                 document.add(preface1);
@@ -356,6 +375,16 @@ public class SendEmail extends AppCompatActivity {
         e.printStackTrace();
         }
 
+        PdfPTable table = new PdfPTable(2);
+        table.setTotalWidth(document.getPageSize().getWidth() - 80);
+        table.setLockedWidth(true);
+        PdfPCell cell;
+        cell = new PdfPCell(new Phrase("Average Monthly Cost on lighting system (Hydro Cost)", smallBold));
+        cell.setBorder(PdfPCell.NO_BORDER);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(fsize + "sq.ft", smallNormal));
+        cell.setBorder(PdfPCell.NO_BORDER);
+        table.addCell(cell);
         // Start a new page
         document.newPage();
     }
@@ -384,7 +413,7 @@ public class SendEmail extends AppCompatActivity {
             Dao<ReplacementBulb, Integer> replacementBulbs = dataBaseHelper.getReplacementBulbDao();
             List<ReplacementBulb> replacementBulbs1 = replacementBulbs.queryForAll();
             for (ReplacementBulb resultses : replacementBulbs1) {
-                typenew = resultses.getTypeOfReplacement();
+                typenew = resultses.getReplacementLight();
                 cell = new PdfPCell(new Phrase("Proposed light fixture type", smallNormal));
                 cell.setBorder(PdfPCell.NO_BORDER);
                 table.addCell(cell);
@@ -462,7 +491,8 @@ public class SendEmail extends AppCompatActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
             Image image = Image.getInstance(stream.toByteArray());
-            image.scalePercent(12f);
+            image.scaleAbsolute(400f, 200f);
+            image.setAlignment(Element.ALIGN_CENTER);
             document.add(emptypreface);
             document.add(image);
         } catch (IOException e) {
@@ -474,18 +504,57 @@ public class SendEmail extends AppCompatActivity {
            /// Image image2 = Image.getInstance(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PdfTest/save.png");
             String yourFilePath = getFilesDir() + "/" + "cost.png";
             Image image2 = Image.getInstance(yourFilePath);
-            image2.scalePercent(30f);
+            image2.scaleAbsolute(400f, 200f);
+            image2.setAlignment(Element.ALIGN_CENTER);
             document.add(emptypreface);
             document.add(image2);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Paragraph horizonaxis = new Paragraph("                 Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec", smallNormal);
+        Paragraph horizonaxis = new Paragraph("Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec", smallNormal);
+        horizonaxis.setAlignment(Element.ALIGN_CENTER);
         document.add(horizonaxis);
         // Start a new page
         document.newPage();
     }
+    private void addContentThird(Document document) throws DocumentException {
+        Paragraph emptypreface = new Paragraph();
+        addEmptyLine(emptypreface, 2);
+        // Second parameter is the number of the chapter
 
+        try {
+            /// Image image2 = Image.getInstance(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PdfTest/save.png");
+            String yourFilePath = getFilesDir() + "/" + "costyearly.png";
+            Image image2 = Image.getInstance(yourFilePath);
+            image2.scaleAbsolute(400f, 200f);
+            image2.setAlignment(Element.ALIGN_CENTER);
+            String yourFilePath1 = getFilesDir() + "/" + "saveyearly.png";
+            Image image1 = Image.getInstance(yourFilePath1);
+            image1.scaleAbsolute(400f, 200f);
+            image1.setAlignment(Element.ALIGN_CENTER);
+            document.add(image2);
+            document.add(emptypreface);
+            document.add(image1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Start a new page
+        document.newPage();
+    }
+
+    public class Borders extends PdfPageEventHelper
+    {
+        @Override
+        public  void onEndPage(PdfWriter writer, Document document){
+            PdfContentByte canvas = writer.getDirectContent();
+            Rectangle rect = document.getPageSize();
+            rect.setBorder(Rectangle.BOX);
+            rect.setBorderWidth(10);
+            rect.setBorderColor(HorizonColor);
+            rect.setUseVariableBorders(true);
+            canvas.rectangle(rect);
+        }
+    }
     private static void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));

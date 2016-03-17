@@ -71,7 +71,9 @@ public class CostSavingGraph extends Activity {
                 View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
                 View screenView = rootView.getRootView();
                 screenView.setDrawingCacheEnabled(true);
-                Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 0, graphView.getWidth(), graphView.getHeight());
+                Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 0, graphView.getWidth()-50, graphView.getHeight());
+                Bitmap bitmap1 = Bitmap.createBitmap(screenView.getDrawingCache(), 0, 1550, graphView.getWidth()-50, graphView.getHeight());
+                writedata(bitmap1, "costyearly.png");
                 writedata(bitmap, "cost.png");
             }
         });
@@ -141,13 +143,13 @@ public class CostSavingGraph extends Activity {
         series2.setColor(Color.RED);
         series2.setTitle("Existing System");
 
-        series3.setColor(Color.BLUE);
+        series3.setColor(getResources().getColor(R.color.Horizoncolor));
         series3.setTitle("HORIZON-ILS™");
 
         bargraphView.getLegendRenderer().setVisible(true);
         bargraphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-
-        bargraphView.setTitle("Cost Saving Graph For Year");
+        bargraphView.getSecondScale().setMinY(0);
+        bargraphView.setTitle("Lighting System Expense Yearly");
         bargraphView.setTitleColor(Color.BLACK);
         bargraphView.setBackgroundColor(Color.WHITE);
 
@@ -158,7 +160,6 @@ public class CostSavingGraph extends Activity {
         //staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
         staticLabelsFormatter.setHorizontalLabels(new String[] {"Ja", "Fe", "Ma", "Ap","Ma", "Ju", "Ju", "Au", "Se", "Oc", "No", "De"});
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-        graphView.getGridLabelRenderer().setNumHorizontalLabels(11);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                 new DataPoint(0, monthlyCostSavingsForWinter),
                 new DataPoint(1, monthlyCostSavingsForWinter),
@@ -192,7 +193,7 @@ public class CostSavingGraph extends Activity {
         series.setColor(Color.RED);
         series.setTitle("Existing System");
 
-        series1.setColor(Color.BLUE);
+        series1.setColor(getResources().getColor(R.color.Horizoncolor));
         series1.setTitle("HORIZON-ILS™");
         graphView.getSecondScale().setMinY(0);
         graphView.getLegendRenderer().setVisible(true);
