@@ -295,6 +295,7 @@ public class SendEmail extends AppCompatActivity {
                 preface1.add(new Paragraph("Light " +number, smallBoldHorizon));
                 addEmptyLine(preface1, 1);
 
+
                 String typeoflight = existingBulb.getTypeOfLight();
                 int wattageperbulb = existingBulb.getWattageOfBulb();
                 int numberoffixture = existingBulb.getNoOfFixtures();

@@ -186,7 +186,6 @@ public class CostSavingGraph extends Activity {
                 new DataPoint(10,mothlyCostForLEDForWinter),
                 new DataPoint(11,mothlyCostForLEDForWinter)
         });
-
         series.setColor(Color.RED);
         series.setTitle("Existing System");
 
