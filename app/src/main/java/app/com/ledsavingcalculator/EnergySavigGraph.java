@@ -132,12 +132,20 @@ public class EnergySavigGraph extends Activity{
 
         barGraph.getLegendRenderer().setVisible(true);
         barGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
         barGraph.setTitle("Energy Consumption - Month (kWh)");
         barGraph.setTitleColor(Color.BLACK);
         barGraph.setBackgroundColor(Color.WHITE);
-        barGraph.getViewport().setMinY(0);
         barGraph.addSeries(existingSeries);
         barGraph.addSeries(replacementSeries);
+
+        Viewport viewportBarGraph = barGraph.getViewport();
+        viewportBarGraph.setYAxisBoundsManual(true);
+        viewportBarGraph.setXAxisBoundsManual(false);
+        viewportBarGraph.setMinY(0);
+
+
+        //Start of Line graph
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
         staticLabelsFormatter.setHorizontalLabels(new String[] {"Ja", "Fe", "Ma", "Ap","Ma", "Ju", "Ju", "Au", "Se", "Oc", "No", "De"});
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
@@ -171,8 +179,8 @@ public class EnergySavigGraph extends Activity{
                 new DataPoint(11,monthlyEnergyCostReplacement)
         });
 
-        replacementPower.setText("" + (int) monthlyEnergyCostForExisting);
-        existingPower.setText("" + (int) monthlyEnergyCostReplacement);
+        replacementPower.setText("" + (int) monthlyEnergyCostForExisting );
+        existingPower.setText("" + (int) monthlyEnergyCostReplacement );
 
         series.setColor(Color.RED);
         series.setTitle("Existing System");
@@ -188,6 +196,11 @@ public class EnergySavigGraph extends Activity{
         graphView.getViewport().setMinY(0);
         graphView.addSeries(series);
         graphView.addSeries(series1);
+
+        Viewport viewport = graphView.getViewport();
+        viewport.setYAxisBoundsManual(true);
+        viewport.setXAxisBoundsManual(true);
+        viewport.setMinY(0);
     }
 
 

@@ -109,8 +109,8 @@ public class CostSavingGraph extends Activity {
         totalSavingsForExistings = Double.parseDouble(f.format(totalSavingsForExistings));
         totalSavingsForLED = Double.parseDouble(f.format(totalSavingsForLED));
 
-        replacement.setText(""+totalSavingsForExistings);
-        existingCost.setText("" + totalSavingsForLED);
+        replacement.setText(""+totalSavingsForExistings + " CAD $/month");
+        existingCost.setText("" + totalSavingsForLED + " CAD $/month");
 
         double existingCostForYear = totalSavingsForExistings * 12.0;
         double replacementsCostForLED = totalSavingsForLED * 12.0;
@@ -153,6 +153,12 @@ public class CostSavingGraph extends Activity {
         bargraphView.getViewport().setMinY(0);
         bargraphView.addSeries(series2);
         bargraphView.addSeries(series3);
+
+        Viewport viewportBarGraph = bargraphView.getViewport();
+        viewportBarGraph.setYAxisBoundsManual(true);
+        viewportBarGraph.setXAxisBoundsManual(false);
+        viewportBarGraph.setMinY(0);
+
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
         //staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
@@ -198,12 +204,19 @@ public class CostSavingGraph extends Activity {
         graphView.setTitle("Energy Expense for Lighting System");
         graphView.setTitleColor(Color.BLACK);
         graphView.setBackgroundColor(Color.WHITE);
-        graphView.getViewport().setMinY(0);
+        //graphView.getViewport().setMinY(0);
         graphView.addSeries(series);
         graphView.addSeries(series1);
 
         // viewport.setMinY(2);
         //viewport.setScrollable(true);
+
+        Viewport viewport = graphView.getViewport();
+        viewport.setYAxisBoundsManual(true);
+        viewport.setMaxY(totalSavingsForExistings+100);
+        viewport.setXAxisBoundsManual(true);
+        viewport.setMinY(0);
+        viewport.setMinX(0);
     }
 
     public void writedata(Bitmap bitmap, String filename) {
