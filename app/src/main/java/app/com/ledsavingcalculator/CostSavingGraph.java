@@ -54,15 +54,15 @@ public class CostSavingGraph extends Activity {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getBaseContext());
 
         Button nextBtn = (Button) findViewById(R.id.nextBtn);
-        Button backBtn = (Button) findViewById(R.id.backBtn);
+       // Button backBtn = (Button) findViewById(R.id.backBtn);
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startNewActivity = new Intent(getBaseContext(), OperationalDays.class);
-                startActivity(startNewActivity);
-            }
-        });
+//        backBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent startNewActivity = new Intent(getBaseContext(), OperationalDays.class);
+//                startActivity(startNewActivity);
+//            }
+//        });
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override

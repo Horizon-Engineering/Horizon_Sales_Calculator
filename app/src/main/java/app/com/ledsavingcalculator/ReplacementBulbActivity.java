@@ -53,6 +53,7 @@ public class ReplacementBulbActivity extends Activity {
         setContentView(R.layout.replacement_page);
 
         final DataBaseHelper dataBaseHelper = new DataBaseHelper(getBaseContext());
+        Firebase.getDefaultConfig().setPersistenceEnabled(true);
 
         backBtnId = findViewById(R.id.backBtn);
         lifeSpan = (EditText) findViewById(R.id.replacementLifeSpan);
@@ -82,6 +83,7 @@ public class ReplacementBulbActivity extends Activity {
 
         Firebase.setAndroidContext(this);
         mRef = new Firebase("https://crackling-fire-1725.firebaseio.com/Light-type");
+        mRef.keepSynced(true);
 
         mRef.addValueEventListener(new ValueEventListener() {
 

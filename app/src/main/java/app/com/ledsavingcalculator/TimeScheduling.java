@@ -37,11 +37,15 @@ import app.com.ledsavingcalculator.util.PerDayData;
 public class TimeScheduling extends Activity implements WeekView.EventClickListener, WeekView.EventLongPressListener, MonthLoader.MonthChangeListener {
 
     private WeekView mWeekView;
-    public int startTime1;
-    public int endTime1;
     private static List<WeekViewEvent> events;
     public boolean shiftOverlap;
     public String doneScheduling = "false";
+    private double onloadSummerPrice = 0.0;
+    private double offloadsummerCost;
+    private double peakloadSummerCost;
+    private double onloadWinterPrice;
+    private double offloadWinterPrice;
+    private double peakloadWinterPrice;
 
     public TimeScheduling() {
     }
@@ -58,6 +62,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
 
         mWeekView = (WeekView) findViewById(R.id.weekView);
         mWeekView.setOnEventClickListener(this);
+
 
         mWeekView.setMonthChangeListener(new MonthLoader.MonthChangeListener() {
             @Override
@@ -167,13 +172,14 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                     final PerDayData totalHoursPerDay = calculations.getTotalHoursPerDay(events);
 
                     Firebase mRef;
+                    Firebase.setAndroidContext(getBaseContext());
                     mRef = new Firebase("https://crackling-fire-1725.firebaseio.com/Canada/Ontario/Brampton");
+                    //Firebase.getDefaultConfig().setPersistenceEnabled(true);
+                    mRef.keepSynced(true);
 
                     mRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            System.out.println(dataSnapshot);
-
                             ExistingBulb lastRow = null;
                             ReplacementBulb replacementBulbRecord = null;
 
@@ -194,14 +200,13 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             }
 
                             //summer price K/W
-                            double onloadSummerPrice = (double) dataSnapshot.child("/summer/weekdays/onload").getValue();
-                            double offloadsummerCost = (double) dataSnapshot.child("/summer/weekdays/offload").getValue();
-                            double peakloadSummerCost = (double) dataSnapshot.child("/summer/weekdays/peakload").getValue();
+                                onloadSummerPrice = (double) dataSnapshot.child("/summer/weekdays/onload").getValue();
+                                offloadsummerCost = (double) dataSnapshot.child("/summer/weekdays/offload").getValue();
+                                peakloadSummerCost = (double) dataSnapshot.child("/summer/weekdays/peakload").getValue();
 
-
-                            double onloadWinterPrice = (double) dataSnapshot.child("/winter/weekdays/onload").getValue();
-                            double offloadWinterPrice = (double) dataSnapshot.child("/winter/weekdays/offload").getValue();
-                            double peakloadWinterPrice = (double) dataSnapshot.child("/winter/weekdays/peakload").getValue();
+                                onloadWinterPrice = (double) dataSnapshot.child("/winter/weekdays/onload").getValue();
+                                offloadWinterPrice = (double) dataSnapshot.child("/winter/weekdays/offload").getValue();
+                                peakloadWinterPrice = (double) dataSnapshot.child("/winter/weekdays/peakload").getValue();
 
                             Calculations calculations1 = new Calculations();
 
@@ -287,7 +292,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                            }
                             else
                            {
-                               Toast.makeText(TimeScheduling.this, "Please select the time", Toast.LENGTH_SHORT).show();
+                               Toast.makeText(TimeScheduling.this, "Please add time schedule for the operational days by long click", Toast.LENGTH_SHORT).show();
                            }
                         }
                         @Override

@@ -24,6 +24,7 @@ import java.util.List;
 public class OperationalDays extends Activity{
     Firebase mRef;
 
+
    List<String> provinceArray;
     private Spinner regions;
     private String selectedRegion;
@@ -34,6 +35,7 @@ public class OperationalDays extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.operational_days_page);
 
+       // Firebase.getDefaultConfig().setPersistenceEnabled(true);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             doneScheduling = bundle.getString("doneScheduling");
@@ -49,6 +51,7 @@ public class OperationalDays extends Activity{
 
         Firebase.setAndroidContext(this);
         mRef = new Firebase("https://crackling-fire-1725.firebaseio.com/Canada/Ontario");
+        mRef.keepSynced(true);
 
         regions = (Spinner) findViewById(R.id.regions);
         Button operationaDays = (Button) findViewById(R.id.operationaDays);
@@ -67,9 +70,13 @@ public class OperationalDays extends Activity{
         addAnotherType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(doneScheduling.equals("true")){
+                    Intent startNewActivity = new Intent(getBaseContext(), ExistingBulbActivity.class);
+                    startActivity(startNewActivity); }
+                else{
+                    Toast.makeText(getBaseContext(),"Please Complete the scheduling", Toast.LENGTH_SHORT).show();
+                }
 
-                Intent startNewActivity = new Intent(getBaseContext(), ExistingBulbActivity.class);
-                startActivity(startNewActivity);
             }
         });
 
@@ -103,7 +110,7 @@ public class OperationalDays extends Activity{
                 Intent startNewActivity = new Intent(getBaseContext(), CostSavingGraph.class);
                 startActivity(startNewActivity); }
                 else{
-                    Toast.makeText(getBaseContext(),"Please Complete the sceduling part", Toast.LENGTH_SHORT);
+                    Toast.makeText(getBaseContext(),"Please Complete the scheduling", Toast.LENGTH_SHORT).show();
                 }
             }
         });
