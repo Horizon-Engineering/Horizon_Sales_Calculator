@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Replacement Light"
+            android:text="Operational Days"
             android:id="@+id/textView2"
             android:textColor="#FFFFFF"
             android:layout_below="@+id/frameLayout"

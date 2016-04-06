@@ -14,8 +14,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ShowDialog extends Activity {
@@ -54,8 +58,7 @@ public class ShowDialog extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.pop_up_layout);
 
         hashMap = new HashMap<>();
@@ -90,7 +93,7 @@ public class ShowDialog extends Activity {
 
        /* final Spinner endTime = (Spinner) findViewById(R.id.endTime);
         ArrayAdapter<String> endTimeArray = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, timeArray);
-        endTime.setAdapter(endTimeArray)*/;
+        endTime.setAdapter(endTimeArray)*/
         startOutput = (TextView) findViewById(R.id.startTimeOutput);
         endOutput = (TextView) findViewById(R.id.endTimeOutput);
 
@@ -280,20 +283,29 @@ public class ShowDialog extends Activity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startNewIntent = new Intent(ShowDialog.this, TimeScheduling.class);
-                startNewIntent.putExtra("year", year);
-                startNewIntent.putExtra("month", month);
-                startNewIntent.putExtra("dayOfTheMonth", dayOfTheMonth);
-                startNewIntent.putExtra("startTime", startHour);
-                startNewIntent.putExtra("startMinute", startMinute);
-                startNewIntent.putExtra("startAMPM", startAMPM);
-                startNewIntent.putExtra("endTime", endHour);
-                startNewIntent.putExtra("endMinute", endMinute);
-                startNewIntent.putExtra("endAMPM", endAMPM);
-                startNewIntent.putExtra("map", hashMap);
-                //Log.v("HashMapTest", hashMap.get("sunday"));
-                startNewIntent.putExtra("repeat", repeatStatus);
-                startActivity(startNewIntent);
+
+                if (!validateTime()) {
+
+                }
+                else if(!(hashMap.containsValue("true"))){
+                    Toast.makeText(getBaseContext(), "please select day for which event is scheduled", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent startNewIntent = new Intent(ShowDialog.this, TimeScheduling.class);
+                    startNewIntent.putExtra("year", year);
+                    startNewIntent.putExtra("month", month);
+                    startNewIntent.putExtra("dayOfTheMonth", dayOfTheMonth);
+                    startNewIntent.putExtra("startTime", startHour);
+                    startNewIntent.putExtra("startMinute", startMinute);
+                    startNewIntent.putExtra("startAMPM", startAMPM);
+                    startNewIntent.putExtra("endTime", endHour);
+                    startNewIntent.putExtra("endMinute", endMinute);
+                    startNewIntent.putExtra("endAMPM", endAMPM);
+                    startNewIntent.putExtra("map", hashMap);
+                    //Log.v("HashMapTest", hashMap.get("sunday"));
+                    startNewIntent.putExtra("repeat", repeatStatus);
+                    startActivity(startNewIntent);
+                }
             }
         });
 
@@ -330,6 +342,7 @@ public class ShowDialog extends Activity {
             startHour   = hourOfDay;
             startMinute = minutes;
             startOutput.setText(updateTime(startHour,startMinute));
+
         }
     };
 
@@ -339,6 +352,7 @@ public class ShowDialog extends Activity {
             endHour   = hourOfDay;
             endMinute = minutes;
             endOutput.setText(updateTime(endHour,endMinute));
+            validateTime();
         }
     };
 
@@ -379,4 +393,26 @@ public class ShowDialog extends Activity {
         return aTime;
     }
 
+    public boolean validateTime(){
+        try {
+
+            String string1 = startHour+":"+startMinute +":"+ "0";
+            String string2 = endHour+":"+endMinute +":"+ "0";
+            Date startTime =  new SimpleDateFormat("HH:mm:ss").parse(string1);
+            Date endTime = new SimpleDateFormat("HH:mm:ss").parse(string2);
+
+            if(startTime.compareTo(endTime)>0 || (startHour == 0 && endHour == 0)){
+                Toast.makeText(getBaseContext(), "Please select valid time, end time cannot be smaller than start time",
+                        Toast.LENGTH_SHORT).show();
+                return  false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return  true;
+    }
+
+    public void showTimePickerDialog(View view) {
+    }
 }

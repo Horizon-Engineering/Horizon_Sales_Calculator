@@ -446,7 +446,13 @@ public class Calculations {
         Float totalEnergy = totalOnloadPrice + totalPeakloadPrice + totalOffloadPrice;
         MonthlyElectricityCostOfExistingBulb = totalEnergy * noOfBulbsPerFixture  * noOfFixtures;
         //MonthlyElectricityCostOfExistingBulb = Float.parseFloat(twoDForm.format(MonthlyElectricityCostOfExistingBulb));
-        return  Float.parseFloat(twoDForm.format(MonthlyElectricityCostOfExistingBulb));
+        try {
+            return  Float.parseFloat(twoDForm.format(MonthlyElectricityCostOfExistingBulb));
+        }
+        catch(NumberFormatException ex) {
+            return  0.0f; // default
+        }
+
     }
 
     public Double getMonthlyCostForExistingBulb(PerDayData totalHoursPerDay, ExistingBulb lastRow, double onloadCost, double peakloadCost, double offloadCost) {

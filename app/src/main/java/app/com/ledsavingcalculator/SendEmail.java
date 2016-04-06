@@ -1,10 +1,7 @@
 package app.com.ledsavingcalculator;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,7 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +33,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.table.TableUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -53,7 +48,6 @@ import app.com.ledsavingcalculator.database.dao.ReplacementBulb;
 import app.com.ledsavingcalculator.database.dao.Results;
 import app.com.ledsavingcalculator.util.Calculations;
 import app.com.ledsavingcalculator.util.Mail;
-import javax.xml.transform.Result;
 
 
 public class SendEmail extends Activity {
@@ -219,7 +213,7 @@ public class SendEmail extends Activity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();
                                     Intent intent = new Intent(SendEmail.this, MainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                 }
                             });

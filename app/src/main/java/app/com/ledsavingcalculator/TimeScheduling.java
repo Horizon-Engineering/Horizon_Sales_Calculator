@@ -59,10 +59,29 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
         if (events == null) {
             events = new ArrayList<>();
         }
+        final int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
 
         mWeekView = (WeekView) findViewById(R.id.weekView);
         mWeekView.setOnEventClickListener(this);
 
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(getBaseContext());
+        Dao<Results, Integer> resultsDao;
+        try {
+            resultsDao = dataBaseHelper.getResultDao();
+            resultsDao.clearObjectCache();
+            dataBaseHelper.clearResultsTable();
+            resultsDao.queryForAll();
+            events.clear();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         mWeekView.setMonthChangeListener(new MonthLoader.MonthChangeListener() {
             @Override
@@ -80,6 +99,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                     int endMinute = bundle.getInt("endMinute");
                     String repeat = bundle.getString("repeat");
                     Intent intent = getIntent();
+                    @SuppressWarnings("unchecked")
                     HashMap<Integer, String> hashMap = (HashMap<Integer, String>) intent.getSerializableExtra("map");
 
                     for (WeekViewEvent weekView : events) {
@@ -160,8 +180,7 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                 }
                 events.clear();
 
-            }
-        });
+            }});
 
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,16 +231,24 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
 
                             int getNoOfBulbsPerFixture = 0;
                             int getNoOfFixtures = 0;
-                            if (replacementBulbRecord.getTypeOfReplacement().equals("Fixture")) {
-                                getNoOfBulbsPerFixture = 1;
-                                getNoOfFixtures = lastRow.getNoOfFixtures();
-                            } else {
-                                getNoOfBulbsPerFixture = lastRow.getNoOfBulbsPerFixture();
-                                getNoOfFixtures = lastRow.getNoOfFixtures();
+                            float costOfReplacement = 0;
+                            int lifeSpanOfReplacement = 0;
+
+                            if(replacementBulbRecord != null) {
+                                if (replacementBulbRecord.getTypeOfReplacement().equals("Fixture")) {
+                                    getNoOfBulbsPerFixture = 1;
+                                    getNoOfFixtures = lastRow.getNoOfFixtures();
+                                } else {
+                                    getNoOfBulbsPerFixture = lastRow.getNoOfBulbsPerFixture();
+                                    getNoOfFixtures = lastRow.getNoOfFixtures();
+                                }
+
+                                costOfReplacement = replacementBulbRecord.getCostOfReplacementbulb();
+                                lifeSpanOfReplacement = replacementBulbRecord.getLifeSpan();
                             }
 
                             //Inital LED Installation cost
-                            double intialLedCost = calculations1.getIntialLedCost(replacementBulbRecord.getCostOfReplacementbulb(),
+                            double intialLedCost = calculations1.getIntialLedCost(costOfReplacement,
                                     0, getNoOfBulbsPerFixture * getNoOfFixtures);
 
                             //Calculate Total hours perWeek
@@ -251,11 +278,11 @@ public class TimeScheduling extends Activity implements WeekView.EventClickListe
                             double monthlyCostForReplacementBulbForSummer = calculations1.getMonthlyCostForReplacementBulb(totalHoursPerDay, replacementBulbRecord, onloadSummerPrice,
                                     peakloadSummerCost, offloadsummerCost, getNoOfFixtures, getNoOfBulbsPerFixture);
 
-                            double costOfExistingBulbReplacement = calculations1.getCostOfExistingBulbReplacement(lastRow, replacementBulbRecord.getLifeSpan(), replacementBulbRecord.getCostOfReplacementbulb());
+                            double costOfExistingBulbReplacement = calculations1.getCostOfExistingBulbReplacement(lastRow, lifeSpanOfReplacement, costOfReplacement);
 
                             double monthlyCostSavingsForSummer = monthlyCostForExistingBulbSummer - monthlyCostForReplacementBulbForSummer;
                             double monthlyCostSavingsForWinter = monthlyCostForExistingBulbWinter - monthlyCostForReplacementBulbForWinter;
-                            Double totalEnergySaving = calculations1.getTotalEnergySaving(replacementBulbRecord.getLifeSpan(), costOfExistingBulbReplacement,
+                            Double totalEnergySaving = calculations1.getTotalEnergySaving(lifeSpanOfReplacement, costOfExistingBulbReplacement,
                                     totalHoursPerDay, monthlyCostSavingsForWinter);
 
                             Results results = new Results();

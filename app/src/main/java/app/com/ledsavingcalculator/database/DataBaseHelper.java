@@ -84,5 +84,30 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
             e.printStackTrace();
         }
     }
+
+    public void clearExistingTable(){
+        try {
+            TableUtils.clearTable(connectionSource, ExistingBulb.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clearResultsTable(){
+        try {
+            TableUtils.clearTable(connectionSource, Results.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clearReplacementTable(){
+        try {
+            TableUtils.clearTable(connectionSource, ReplacementBulb.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

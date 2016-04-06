@@ -272,15 +272,17 @@
             android:textColor="#ffffff"
             android:layout_below="@+id/replacmentType"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="15dp"
+            android:visibility="invisible" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numeric="integer"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:inputType="text"
+            android:maxLength="25"
             android:textColor="#ffffff"
             android:layout_alignStart="@+id/replacmentType"
             android:layout_alignEnd="@+id/textView10"

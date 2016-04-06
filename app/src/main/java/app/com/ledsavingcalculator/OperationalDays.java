@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -24,8 +25,7 @@ import java.util.List;
 public class OperationalDays extends Activity{
     Firebase mRef;
 
-
-   List<String> provinceArray;
+    List<String> provinceArray;
     private Spinner regions;
     private String selectedRegion;
     String doneScheduling = "false";
@@ -41,9 +41,17 @@ public class OperationalDays extends Activity{
             doneScheduling = bundle.getString("doneScheduling");
         }
 
+        final int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+
         final Typeface mFont = Typeface.createFromAsset(getAssets(),
                 "fonts/Lato-Regular.ttf");
-
         final ViewGroup mContainer = (ViewGroup) findViewById(
                 android.R.id.content).getRootView();
         SetFont.setAppFont(mContainer, mFont);
@@ -107,10 +115,19 @@ public class OperationalDays extends Activity{
             @Override
             public void onClick(View v) {
                 if(doneScheduling.equals("true")){
+                    doneScheduling = "false";
                 Intent startNewActivity = new Intent(getBaseContext(), CostSavingGraph.class);
                 startActivity(startNewActivity); }
                 else{
-                    Toast.makeText(getBaseContext(),"Please Complete the scheduling", Toast.LENGTH_SHORT).show();
+                    final Toast toast = Toast.makeText(getBaseContext(), "Please Complete the scheduling", Toast.LENGTH_SHORT);
+                    toast.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            toast.cancel();
+                        }
+                    }, 1000);
                 }
             }
         });

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +46,6 @@ public class ExistingBulbActivity extends Activity {
     private DataBaseHelper dataBaseHelper;
     private MyArrayAdapter mySpinnerArrayAdapter;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -62,7 +59,7 @@ public class ExistingBulbActivity extends Activity {
      // numberOfBulbPerFixture.setText("6");
         selectLifeSpanType = (Spinner)  findViewById(R.id.selectLifeSpanType);
         costOfExistingBulb = (EditText)  findViewById(R.id.costOfExistingBulb);
-     //costOfExistingBulb.setText("3");
+    //costOfExistingBulb.setText("3");
         ExistingBulbWattage = (EditText) findViewById(R.id.ExistingBulbWattage);
      // ExistingBulbWattage.setText("54");
         enteredTypeOfBulb = (EditText) findViewById(R.id.enteredTypeOfBulb);
@@ -78,6 +75,16 @@ public class ExistingBulbActivity extends Activity {
 
         dataBaseHelper = new DataBaseHelper(getBaseContext());
 
+        Dao<ExistingBulb, Integer> existingDaoType;
+        try {
+            existingDaoType = dataBaseHelper.getExistingBulbDao();
+            existingDaoType.clearObjectCache();
+            dataBaseHelper.clearExistingTable();
+            existingDaoType.queryForAll();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         final Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/Lato-Regular.ttf");
 
         final ViewGroup mContainer = (ViewGroup) findViewById(
@@ -159,20 +166,28 @@ public class ExistingBulbActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if( numberOfFixture.getText().toString().equals("")) {
-                    numberOfFixture.setError("Number of Fixture is required");
+                if( numberOfFixture.getText().toString().equals("") || numberOfFixture.getText().toString().equals("0")
+                        || Integer.valueOf(numberOfFixture.getText().toString())<= 0) {
+                    numberOfFixture.setError("Please enter valid data for number of fixtures");
                 }
-                else if(numberOfBulbPerFixture.getText().toString().trim().equals("")){
-                    numberOfBulbPerFixture.setError("Number of bulb is required");
+                else if(numberOfBulbPerFixture.getText().toString().trim().equals("") ||
+                        numberOfBulbPerFixture.getText().toString().equals("0") || Integer.valueOf(numberOfBulbPerFixture.getText().toString())<= 0){
+                    numberOfBulbPerFixture.setError("Please enter valid data for number of bulb");
                 }
-                else if(lifespanHour.getText().toString().trim().equals("")){
+                else if(lifespanHour.getText().toString().trim().equals("") || lifespanHour.getText().toString().trim().equals("0") ||
+                        Integer.valueOf(lifespanHour.getText().toString())<= 0 ){
                     lifespanHour.setError("Life Span is required");
                 }
-                else if(ExistingBulbWattage.getText().toString().trim().equals("")){
+                else if(ExistingBulbWattage.getText().toString().trim().equals("") || ExistingBulbWattage.getText().toString().trim().equals("0") ||
+                        Integer.valueOf(ExistingBulbWattage.getText().toString())<= 0 ){
                     ExistingBulbWattage.setError("Wattage of bulb is required");
                 }
-                else if(costOfExistingBulb.getText().toString().trim().equals("")){
+                else if(costOfExistingBulb.getText().toString().trim().equals("") || costOfExistingBulb.getText().toString().trim().equals("0") ||
+                        Float.valueOf(costOfExistingBulb.getText().toString())<= 0){
                     costOfExistingBulb.setError("Cost of bulb is required");
+                }
+                else if(enteredTypeOfBulb.getText().toString().trim().equals("") && selectedTypeofExistingBulb.equals("Other")){
+                    enteredTypeOfBulb.setError("Type of bulb is required");
                 }
                 else {
 
